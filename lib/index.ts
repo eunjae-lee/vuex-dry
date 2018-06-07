@@ -1,1 +1,3 @@
-export const HELLO = "world";
+import Module from "./module";
+
+export { Module };
