@@ -5,23 +5,28 @@ describe("Module", () => {
     expect(Module.build).toBeInstanceOf(Function);
   });
 
-  it("builds a simple module", () => {
+  it("builds state", () => {
     const module = Module.build({
       name: "auth",
       data() {
         return {
-          token: undefined
+          token: "my token"
         };
       }
     });
-    expect(module).toEqual({
-      namespaced: true,
-      state: {
-        token: undefined
-      },
-      getters: {},
-      actions: {},
-      mutations: {}
+    expect(module.state.token).toEqual("my token");
+  });
+
+  it("builds getters", () => {
+    const module = Module.build({
+      name: "auth",
+      data() {
+        return {
+          token: "my token"
+        };
+      }
     });
+    expect(module.getters.token(module.state)).toEqual("my token");
+    // TODO : change the above line with the way using vuex store. The getters shouldn't be used this way.
   });
 });
