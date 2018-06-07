@@ -7,7 +7,8 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "autotest": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,9 @@
   },
   "homepage": "https://github.com/eunjae-lee/vuex-dry#readme",
   "devDependencies": {
+    "@types/jest": "^23.0.0",
+    "jest": "^23.1.0",
+    "ts-jest": "^22.4.6",
     "typescript": "^2.9.1"
   }
 }
