@@ -25,4 +25,61 @@ describe("Default mutations", () => {
     store.commit("user/$add", { key: "myList", value: "abc" });
     expect(store.getters["user/myList"]).toEqual(["abc"]);
   });
+  it("provide $delete for array state", () => {
+    const store = sampleStore();
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 1, name: "Paul" }
+    });
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 2, name: "John" }
+    });
+    store.commit("user/$delete", {
+      key: "myList",
+      identifier: (x: any) => x.id == 1
+    });
+    expect(store.getters["user/myList"]).toEqual([{ id: 2, name: "John" }]);
+  });
+  it("provide $update for array state", () => {
+    const store = sampleStore();
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 1, name: "Paul" }
+    });
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 2, name: "John" }
+    });
+    store.commit("user/$update", {
+      key: "myList",
+      value: { id: 1, name: "Paul Lee" },
+      identifier: (x: any) => x.id == 1
+    });
+    expect(store.getters["user/myList"]).toEqual([
+      { id: 1, name: "Paul Lee" },
+      { id: 2, name: "John" }
+    ]);
+  });
+  it("add item when $update failed to find one", () => {
+    const store = sampleStore();
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 1, name: "Paul" }
+    });
+    store.commit("user/$add", {
+      key: "myList",
+      value: { id: 2, name: "John" }
+    });
+    store.commit("user/$update", {
+      key: "myList",
+      value: { id: 3, name: "Tom" },
+      identifier: (x: any) => x.id == 3
+    });
+    expect(store.getters["user/myList"]).toEqual([
+      { id: 1, name: "Paul" },
+      { id: 2, name: "John" },
+      { id: 3, name: "Tom" }
+    ]);
+  });
 });

@@ -37,16 +37,16 @@ describe("Module", () => {
 
   it("builds mutations", () => {
     const store = sampleStore();
-    store.commit("user/setName", "Eunjae");
-    expect(store.state.user.name).toEqual("Eunjae");
-    expect(store.getters["user/name"]).toEqual("Eunjae");
+    store.commit("user/setName", "John");
+    expect(store.state.user.name).toEqual("John");
+    expect(store.getters["user/name"]).toEqual("John");
   });
 
   it("builds actions", () => {
     const store = sampleStore();
-    store.dispatch("user/setName", "Eunjae");
-    expect(store.state.user.name).toEqual("Eunjae");
-    expect(store.getters["user/name"]).toEqual("Eunjae");
+    store.dispatch("user/setName", "John");
+    expect(store.state.user.name).toEqual("John");
+    expect(store.getters["user/name"]).toEqual("John");
   });
 
   it("let us add getters", () => {
@@ -105,7 +105,7 @@ describe("Module", () => {
         })
       }
     });
-    store.dispatch("user/customNameSetter", "Eunjae");
-    expect(store.getters["user/name"]).toEqual("Eunjae");
+    store.dispatch("user/customNameSetter", "John");
+    expect(store.getters["user/name"]).toEqual("John");
   });
 });
