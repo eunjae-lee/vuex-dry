@@ -1,10 +1,14 @@
 import ModuleBuildConfig from "./build_config";
-import { GetterTree } from "vuex";
+import { Getter, GetterTree } from "vuex";
 
-function build(buildConfig: ModuleBuildConfig): any {
+function getter(key: string): Getter<any, any> {
+  return (state: any) => state[key];
+}
+
+function build(buildConfig: ModuleBuildConfig): GetterTree<any, any> {
   return Object.keys(buildConfig.data()).reduce(
     (acc: any, key: string, index: number) => {
-      acc[key] = (state: any) => state[key];
+      acc[key] = getter(key);
       return acc;
     },
     {}
