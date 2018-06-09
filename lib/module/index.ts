@@ -10,9 +10,18 @@ const Module = {
     return {
       namespaced: true,
       state: buildState(buildConfig),
-      getters: buildGetters(buildConfig),
-      mutations: buildMutations(buildConfig),
-      actions: buildActions(buildConfig)
+      getters: {
+        ...buildGetters(buildConfig),
+        ...buildConfig.getters
+      },
+      mutations: {
+        ...buildMutations(buildConfig),
+        ...buildConfig.mutations
+      },
+      actions: {
+        ...buildActions(buildConfig),
+        ...buildConfig.actions
+      }
     };
   }
 };

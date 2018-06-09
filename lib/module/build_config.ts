@@ -1,13 +1,16 @@
-import { Module as VuexModule } from "vuex";
+import {
+  Module as VuexModule,
+  GetterTree,
+  ActionTree,
+  MutationTree
+} from "vuex";
 
 interface ModuleBuildConfig {
   name: string;
   data: Function;
-  modules?: ModuleTree;
-}
-
-interface ModuleTree {
-  [key: string]: VuexModule;
+  getters?: GetterTree<any, any>;
+  actions?: ActionTree<any, any>;
+  mutations?: MutationTree<any>;
 }
 
 export default ModuleBuildConfig;
