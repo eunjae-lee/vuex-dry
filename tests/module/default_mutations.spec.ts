@@ -88,4 +88,20 @@ describe("Default mutations", () => {
     store.commit("user/$set", { state: "myMap", key: "abc", value: "def" });
     expect(store.getters["user/myMap"]).toEqual({ abc: "def" });
   });
+
+  it("provide $reset", () => {
+    const store = sampleStore();
+    store.commit("user/$add", { state: "myList", value: "hello" });
+    store.commit("user/$reset", "myList");
+    expect(store.getters["user/myList"]).toEqual([]);
+  });
+
+  it("provide $resetAll", () => {
+    const store = sampleStore();
+    store.commit("user/$add", { state: "myList", value: "hello" });
+    store.commit("user/$set", { state: "myMap", key: "abc", value: "def" });
+    store.commit("user/$resetAll");
+    expect(store.getters["user/myList"]).toEqual([]);
+    expect(store.getters["user/myMap"]).toEqual({});
+  });
 });

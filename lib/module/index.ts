@@ -16,7 +16,7 @@ const Module = {
         ...buildConfig.getters
       },
       mutations: {
-        ...defaultMutations(),
+        ...defaultMutations(buildConfig),
         ...buildMutations(buildConfig),
         ...buildConfig.mutations
       },

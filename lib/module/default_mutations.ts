@@ -1,4 +1,5 @@
 import { Mutation, MutationTree } from "vuex";
+import BuildConfig from "./build_config";
 
 interface ArrayAddPayLoad {
   state: string;
@@ -46,12 +47,29 @@ const $set = (state: any, payload: ObjectSetPayload) => {
   state[payload.state][payload.key] = payload.value;
 };
 
-function defaultMutations(): MutationTree<any> {
+const makeReset = (buildConfig: BuildConfig) => {
+  return (state: any, stateName: string) => {
+    state[stateName] = buildConfig.data()[stateName];
+  };
+};
+
+const makeResetAll = (buildConfig: BuildConfig) => {
+  return (state: any) => {
+    const data = buildConfig.data();
+    Object.keys(data).forEach((key: string) => {
+      state[key] = data[key];
+    });
+  };
+};
+
+function defaultMutations(buildConfig: BuildConfig): MutationTree<any> {
   return {
     $add,
     $delete,
     $update,
-    $set
+    $set,
+    $reset: makeReset(buildConfig),
+    $resetAll: makeResetAll(buildConfig)
   };
 }
 
