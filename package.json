@@ -2,11 +2,11 @@
   "name": "vuex-dry",
   "version": "0.0.1",
   "description": "DRY vuex, no more repetitive codes",
-  "main": "dist/index.js",
+  "main": "dist/vuex-dry.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "tsc",
+    "build": "bili",
     "test": "jest",
     "autotest": "npm test -- --watch"
   },
@@ -30,7 +30,9 @@
   "homepage": "https://github.com/eunjae-lee/vuex-dry#readme",
   "devDependencies": {
     "@types/jest": "^23.0.0",
+    "bili": "^3.1.2",
     "jest": "^23.1.0",
+    "rollup-plugin-typescript2": "^0.14.0",
     "ts-jest": "^22.4.6",
     "typescript": "^2.9.1",
     "vue": "^2.5.16",
