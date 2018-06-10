@@ -22,21 +22,21 @@ function sampleStore() {
 describe("Default mutations", () => {
   it("provide $add for array state", () => {
     const store = sampleStore();
-    store.commit("user/$add", { key: "myList", value: "abc" });
+    store.commit("user/$add", { state: "myList", value: "abc" });
     expect(store.getters["user/myList"]).toEqual(["abc"]);
   });
   it("provide $delete for array state", () => {
     const store = sampleStore();
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 1, name: "Paul" }
     });
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 2, name: "John" }
     });
     store.commit("user/$delete", {
-      key: "myList",
+      state: "myList",
       identifier: (x: any) => x.id == 1
     });
     expect(store.getters["user/myList"]).toEqual([{ id: 2, name: "John" }]);
@@ -44,15 +44,15 @@ describe("Default mutations", () => {
   it("provide $update for array state", () => {
     const store = sampleStore();
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 1, name: "Paul" }
     });
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 2, name: "John" }
     });
     store.commit("user/$update", {
-      key: "myList",
+      state: "myList",
       value: { id: 1, name: "Paul Lee" },
       identifier: (x: any) => x.id == 1
     });
@@ -64,15 +64,15 @@ describe("Default mutations", () => {
   it("add item when $update failed to find one", () => {
     const store = sampleStore();
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 1, name: "Paul" }
     });
     store.commit("user/$add", {
-      key: "myList",
+      state: "myList",
       value: { id: 2, name: "John" }
     });
     store.commit("user/$update", {
-      key: "myList",
+      state: "myList",
       value: { id: 3, name: "Tom" },
       identifier: (x: any) => x.id == 3
     });
@@ -81,5 +81,11 @@ describe("Default mutations", () => {
       { id: 2, name: "John" },
       { id: 3, name: "Tom" }
     ]);
+  });
+
+  it("provide $set for object state", () => {
+    const store = sampleStore();
+    store.commit("user/$set", { state: "myMap", key: "abc", value: "def" });
+    expect(store.getters["user/myMap"]).toEqual({ abc: "def" });
   });
 });

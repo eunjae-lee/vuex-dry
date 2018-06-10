@@ -1,46 +1,57 @@
 import { Mutation, MutationTree } from "vuex";
 
 interface ArrayAddPayLoad {
-  key: string;
+  state: string;
   value: any;
 }
 
 interface ArrayDeletePayload {
-  key: string;
+  state: string;
   identifier: Function;
 }
 
 interface ArrayUpdatePayload {
-  key: string;
+  state: string;
   value: any;
   identifier: Function;
 }
 
+interface ObjectSetPayload {
+  state: string;
+  key: string;
+  value: any;
+}
+
 const $add = (state: any, payload: ArrayAddPayLoad) => {
-  state[payload.key].push(payload.value);
+  state[payload.state].push(payload.value);
 };
 
 const $delete = (state: any, payload: ArrayDeletePayload) => {
-  const index = state[payload.key].findIndex(payload.identifier);
+  const index = state[payload.state].findIndex(payload.identifier);
   if (index != -1) {
-    state[payload.key].splice(index, 1);
+    state[payload.state].splice(index, 1);
   }
 };
 
 const $update = (state: any, payload: ArrayUpdatePayload) => {
-  const index = state[payload.key].findIndex(payload.identifier);
+  const index = state[payload.state].findIndex(payload.identifier);
   if (index == -1) {
-    $add(state, { key: payload.key, value: payload.value });
+    $add(state, { state: payload.state, value: payload.value });
   } else {
-    state[payload.key][index] = payload.value;
+    state[payload.state][index] = payload.value;
   }
+};
+
+const $set = (state: any, payload: ObjectSetPayload) => {
+  state[payload.state][payload.key] = payload.value;
 };
 
 function defaultMutations(): MutationTree<any> {
   return {
     $add,
     $delete,
-    $update
+    $update,
+    $set
   };
 }
 
