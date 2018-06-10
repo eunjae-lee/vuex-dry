@@ -85,8 +85,34 @@ describe("Default mutations", () => {
 
   it("provide $set for object state", () => {
     const store = sampleStore();
-    store.commit("user/$set", { state: "myMap", key: "abc", value: "def" });
+    store.commit("user/$set", { state: "myMap.abc", value: "def" });
     expect(store.getters["user/myMap"]).toEqual({ abc: "def" });
+  });
+
+  it("failes to $set when path is wrong", () => {
+    const store = sampleStore();
+    expect(() => {
+      store.commit("user/$set", { state: "myMap2.abc", value: "def" });
+    }).toThrow();
+  });
+
+  it("`$set`s nested property", () => {
+    const store = new Vuex.Store({
+      modules: {
+        user: Module.build({
+          name: "user",
+          data() {
+            return {
+              profile: {
+                bio: undefined
+              }
+            };
+          }
+        })
+      }
+    });
+    store.commit("user/$set", { state: "profile.bio", value: "hello" });
+    expect(store.getters["user/profile"]).toEqual({ bio: "hello" });
   });
 
   it("provide $reset", () => {
@@ -99,7 +125,7 @@ describe("Default mutations", () => {
   it("provide $resetAll", () => {
     const store = sampleStore();
     store.commit("user/$add", { state: "myList", value: "hello" });
-    store.commit("user/$set", { state: "myMap", key: "abc", value: "def" });
+    store.commit("user/$set", { state: "myMap.abc", value: "def" });
     store.commit("user/$resetAll");
     expect(store.getters["user/myList"]).toEqual([]);
     expect(store.getters["user/myMap"]).toEqual({});

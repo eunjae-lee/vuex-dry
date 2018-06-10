@@ -19,7 +19,6 @@ interface ArrayUpdatePayload {
 
 interface ObjectSetPayload {
   state: string;
-  key: string;
   value: any;
 }
 
@@ -44,32 +43,41 @@ const $update = (state: any, payload: ArrayUpdatePayload) => {
 };
 
 const $set = (state: any, payload: ObjectSetPayload) => {
-  state[payload.state][payload.key] = payload.value;
+  let obj = state;
+  const keys = payload.state.split(".");
+  const keysExceptForTheLast = keys.slice(0, keys.length - 1);
+  const lastKey = keys[keys.length - 1];
+  keysExceptForTheLast.forEach((key: string, index: number) => {
+    if (!obj[key]) {
+      throw new Error(`${keys.slice(0, index + 1).join(".")} is ${obj[key]}`);
+    }
+    obj = obj[key];
+  });
+  obj[lastKey] = payload.value;
 };
 
-const makeReset = (buildConfig: BuildConfig) => {
+const makeReset = (initialState: any) => {
   return (state: any, stateName: string) => {
-    state[stateName] = buildConfig.data()[stateName];
+    state[stateName] = initialState[stateName];
   };
 };
 
-const makeResetAll = (buildConfig: BuildConfig) => {
+const makeResetAll = (initialState: any) => {
   return (state: any) => {
-    const data = buildConfig.data();
-    Object.keys(data).forEach((key: string) => {
-      state[key] = data[key];
+    Object.keys(initialState).forEach((key: string) => {
+      state[key] = initialState[key];
     });
   };
 };
 
-function defaultMutations(buildConfig: BuildConfig): MutationTree<any> {
+function defaultMutations(initialState: any): MutationTree<any> {
   return {
     $add,
     $delete,
     $update,
     $set,
-    $reset: makeReset(buildConfig),
-    $resetAll: makeResetAll(buildConfig)
+    $reset: makeReset(initialState),
+    $resetAll: makeResetAll(initialState)
   };
 }
 
