@@ -1,4 +1,3 @@
-import ModuleBuildConfig from "./build_config";
 import { Action, ActionTree, ActionContext } from "vuex";
 import { capitalize } from "../utils/string_util";
 
@@ -15,8 +14,8 @@ function action(key: string): Action<any, any> {
     context.commit(mutationName(key), payload);
 }
 
-function build(buildConfig: ModuleBuildConfig): ActionTree<any, any> {
-  return Object.keys(buildConfig.data()).reduce(
+function build(initialState: any): ActionTree<any, any> {
+  return Object.keys(initialState).reduce(
     (acc: any, key: string, index: number) => {
       acc[actionName(key)] = action(key);
       return acc;

@@ -9,22 +9,22 @@ import { Module as VuexModuleType } from "vuex";
 
 const Module = {
   build(buildConfig: BuildConfig): VuexModuleType<any, any> {
-    const initialState = buildConfig.data();
+    const initialState = buildConfig.state();
     return {
       namespaced: true,
       state: buildState(buildConfig),
       getters: {
         ...defaultGetters(initialState),
-        ...buildGetters(buildConfig),
+        ...buildGetters(initialState),
         ...buildConfig.getters
       },
       mutations: {
         ...defaultMutations(initialState),
-        ...buildMutations(buildConfig),
+        ...buildMutations(initialState),
         ...buildConfig.mutations
       },
       actions: {
-        ...buildActions(buildConfig),
+        ...buildActions(initialState),
         ...buildConfig.actions
       }
     };

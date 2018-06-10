@@ -8,7 +8,7 @@ const sampleStore = () => {
     modules: {
       user: Module.build({
         name: "user",
-        data() {
+        state() {
           return {
             profile: {
               bio: "hello"

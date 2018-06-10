@@ -7,7 +7,7 @@ import {
 
 interface ModuleBuildConfig {
   name: string;
-  data: Function;
+  state: Function;
   getters?: GetterTree<any, any>;
   actions?: ActionTree<any, any>;
   mutations?: MutationTree<any>;

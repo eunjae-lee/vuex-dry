@@ -8,7 +8,7 @@ function sampleStore() {
     modules: {
       user: Module.build({
         name: "user",
-        data() {
+        state() {
           return {
             myList: [],
             myMap: {}
@@ -101,7 +101,7 @@ describe("Default mutations", () => {
       modules: {
         user: Module.build({
           name: "user",
-          data() {
+          state() {
             return {
               profile: {
                 bio: undefined
