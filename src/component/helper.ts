@@ -4,9 +4,9 @@ function store() {
   return cachedStore.get();
 }
 
-export function get(moduleName: string, key: string) {
+export function get(type: string) {
   return () => {
-    return store().getters[`${moduleName}/${key}`];
+    return store().getters[type];
   };
 }
 
@@ -16,13 +16,13 @@ export function action(type: string) {
   };
 }
 
-export function sync(moduleName: string, key: string) {
+export function sync(type: string) {
   return {
     get() {
-      return store().getters[`${moduleName}/${key}`];
+      return store().getters[type];
     },
     set(value: any) {
-      store().commit(`${moduleName}/${key}`, value);
+      store().commit(type, value);
     }
   };
 }
