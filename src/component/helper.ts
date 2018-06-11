@@ -10,11 +10,7 @@ export function get(moduleName: string, key: string) {
   };
 }
 
-export function action(
-  moduleName: string,
-  actionName: string,
-  payload: any | undefined
-) {
+export function action(moduleName: string, actionName: string, payload?: any) {
   return () => {
     return store().dispatch(`${moduleName}/${actionName}`, payload);
   };
