@@ -111,6 +111,6 @@ These are always repeated every time we write vuex code. And now you don't need 
 
 `vuex-dry` has prepared array-specific and object-specific features as well.
 
-You can refer [this link](https://github.com/eunjae-lee/vuex-dry/wiki) to get to know them.
+You can refer to [WIKI PAGE](https://github.com/eunjae-lee/vuex-dry/wiki) to get to know them more.
 
 Also you can see how easy to map getters and actions with `vuex-dry` on component-side.
