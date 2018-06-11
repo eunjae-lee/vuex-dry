@@ -1,6 +1,6 @@
 {
   "name": "vuex-dry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "DRY vuex, no more repetitive codes",
   "main": "dist/vuex-dry.js",
   "types": "dist/index.d.ts",
