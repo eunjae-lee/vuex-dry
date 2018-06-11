@@ -1,8 +1,7 @@
 import { Action, ActionTree, ActionContext } from "vuex";
-import { capitalize } from "../utils/string_util";
 
 function actionName(key: string) {
-  return `set${capitalize(key)}`;
+  return `${key}$assign`;
 }
 
 function mutationName(key: string) {

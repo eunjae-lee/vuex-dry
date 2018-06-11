@@ -1,8 +1,7 @@
 import { Mutation, MutationTree } from "vuex";
-import { capitalize } from "../utils/string_util";
 
 function mutationName(key: string) {
-  return `set${capitalize(key)}`;
+  return `${key}$assign`;
 }
 
 function mutation(key: string): Mutation<any> {

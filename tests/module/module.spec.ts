@@ -37,14 +37,14 @@ describe("Module", () => {
 
   it("builds mutations", () => {
     const store = sampleStore();
-    store.commit("user/setName", "John");
+    store.commit("user/name$assign", "John");
     expect(store.state.user.name).toEqual("John");
     expect(store.getters["user/name"]).toEqual("John");
   });
 
   it("builds actions", () => {
     const store = sampleStore();
-    store.dispatch("user/setName", "John");
+    store.dispatch("user/name$assign", "John");
     expect(store.state.user.name).toEqual("John");
     expect(store.getters["user/name"]).toEqual("John");
   });
@@ -100,7 +100,7 @@ describe("Module", () => {
           },
           actions: {
             customNameSetter: ({ commit }, newName: string) =>
-              commit("setName", newName)
+              commit("name$assign", newName)
           }
         })
       }

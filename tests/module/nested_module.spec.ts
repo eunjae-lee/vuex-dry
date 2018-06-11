@@ -38,7 +38,7 @@ const sampleStore = () => {
 describe("Nested module", () => {
   it("works fine", () => {
     const store = sampleStore();
-    store.commit("company/owner/setName", "Paul");
+    store.commit("company/owner/name$assign", "Paul");
     expect(store.getters["company/owner/name"]).toEqual("Paul");
   });
 
