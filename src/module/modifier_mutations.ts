@@ -72,10 +72,13 @@ const makeResetAll = (initialState: any) => {
 
 function modifierMutations(initialState: any): MutationTree<any> {
   return Object.keys(initialState).reduce((acc: any, stateName: string) => {
-    acc[`${stateName}$add`] = makeAdd(stateName);
-    acc[`${stateName}$delete`] = makeDelete(stateName);
-    acc[`${stateName}$update`] = makeUpdate(stateName);
-    acc[`${stateName}$set`] = makeSet(stateName);
+    if (Array.isArray(initialState[stateName])) {
+      acc[`${stateName}$add`] = makeAdd(stateName);
+      acc[`${stateName}$delete`] = makeDelete(stateName);
+      acc[`${stateName}$update`] = makeUpdate(stateName);
+    } else if (initialState[stateName] instanceof Object) {
+      acc[`${stateName}$set`] = makeSet(stateName);
+    }
     acc[`${stateName}$reset`] = makeReset(stateName, initialState);
     acc["$resetAll"] = makeResetAll(initialState);
     return acc;

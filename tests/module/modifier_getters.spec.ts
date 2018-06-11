@@ -12,7 +12,8 @@ const sampleStore = () => {
           return {
             profile: {
               bio: "hello"
-            }
+            },
+            posts: []
           };
         }
       })
@@ -31,5 +32,25 @@ describe("Default getters", () => {
     expect(() => {
       store.getters["user/profile$get"]("bioo");
     }).toThrow();
+  });
+
+  it("provide $find for array state", () => {
+    const store = sampleStore();
+    store.commit("user/posts$add", { id: 1, title: "hello" });
+    store.commit("user/posts$add", { id: 2, title: "world" });
+    store.commit("user/posts$add", { id: 3, title: "!" });
+    expect(
+      store.getters["user/posts$find"]((item: any) => item.id == 2)
+    ).toEqual({ id: 2, title: "world" });
+  });
+
+  it("provide $filter for array state", () => {
+    const store = sampleStore();
+    store.commit("user/posts$add", { id: 1, title: "hello" });
+    store.commit("user/posts$add", { id: 2, title: "world" });
+    store.commit("user/posts$add", { id: 3, title: "!" });
+    expect(
+      store.getters["user/posts$filter"]((item: any) => item.id > 1)
+    ).toEqual([{ id: 2, title: "world" }, { id: 3, title: "!" }]);
   });
 });

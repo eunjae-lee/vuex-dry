@@ -12,9 +12,26 @@ const makeGet = (initialState: any, stateName: string): Getter<any, any> => {
   };
 };
 
+const makeFind = (stateName: string): Getter<any, any> => {
+  return (state: any) => (identifier: Function) => {
+    return state[stateName].find(identifier);
+  };
+};
+
+const makeFilter = (stateName: string): Getter<any, any> => {
+  return (state: any) => (identifier: Function) => {
+    return state[stateName].filter(identifier);
+  };
+};
+
 function modifierGetters(initialState: any): GetterTree<any, any> {
   return Object.keys(initialState).reduce((acc: any, stateName: string) => {
-    acc[`${stateName}$get`] = makeGet(initialState, stateName);
+    if (Array.isArray(initialState[stateName])) {
+      acc[`${stateName}$find`] = makeFind(stateName);
+      acc[`${stateName}$filter`] = makeFilter(stateName);
+    } else if (initialState[stateName] instanceof Object) {
+      acc[`${stateName}$get`] = makeGet(initialState, stateName);
+    }
     return acc;
   }, {});
 }
