@@ -14,13 +14,21 @@ interface ArrayDeletePayload {
 interface ArrayUpdatePayload {
   state: string;
   value: any;
-  identifier: Function;
+  identifier: Function | string;
 }
 
 interface ObjectSetPayload {
   state: string;
   value: any;
 }
+
+const identifierFn = (identifier: Function | string, value: any) => {
+  if (identifier instanceof Function) {
+    return identifier;
+  } else {
+    return (item: any) => item[identifier] == value[identifier];
+  }
+};
 
 const $add = (state: any, payload: ArrayAddPayLoad) => {
   state[payload.state].push(payload.value);
@@ -34,7 +42,8 @@ const $delete = (state: any, payload: ArrayDeletePayload) => {
 };
 
 const $update = (state: any, payload: ArrayUpdatePayload) => {
-  const index = state[payload.state].findIndex(payload.identifier);
+  const identifier = identifierFn(payload.identifier, payload.value);
+  const index = state[payload.state].findIndex(identifier);
   if (index == -1) {
     $add(state, { state: payload.state, value: payload.value });
   } else {

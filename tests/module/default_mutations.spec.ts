@@ -61,6 +61,28 @@ describe("Default mutations", () => {
       { id: 2, name: "John" }
     ]);
   });
+
+  it("allowes string parameter as identifier for $update", () => {
+    const store = sampleStore();
+    store.commit("user/$add", {
+      state: "myList",
+      value: { id: 1, name: "Paul" }
+    });
+    store.commit("user/$add", {
+      state: "myList",
+      value: { id: 2, name: "John" }
+    });
+    store.commit("user/$update", {
+      state: "myList",
+      value: { id: 1, name: "Paul Lee" },
+      identifier: "id"
+    });
+    expect(store.getters["user/myList"]).toEqual([
+      { id: 1, name: "Paul Lee" },
+      { id: 2, name: "John" }
+    ]);
+  });
+
   it("add item when $update failed to find one", () => {
     const store = sampleStore();
     store.commit("user/$add", {
