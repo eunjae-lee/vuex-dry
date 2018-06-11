@@ -4,6 +4,8 @@
 It doesn't introduce any whole new way to use vuex.
 It just help build modules for you with minimum amount of code, adding some convenient getters, mutations and actions.
 
+`vuex-dry` is TypeScript-friendly, since it's written in TypeScript.
+
 # Install
 
 ```bash
