@@ -10,9 +10,9 @@ export function get(moduleName: string, key: string) {
   };
 }
 
-export function action(moduleName: string, actionName: string) {
+export function action(type: string) {
   return (payload?: any) => {
-    return store().dispatch(`${moduleName}/${actionName}`, payload);
+    return store().dispatch(type, payload);
   };
 }
 
