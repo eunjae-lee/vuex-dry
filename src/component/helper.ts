@@ -10,9 +10,9 @@ export function get(moduleName: string, key: string) {
   };
 }
 
-export function action(moduleName: string, actionName: string, payload?: any) {
-  return () => {
-    return store().dispatch(`${moduleName}/${actionName}`, payload);
+export function action(moduleName: string, actionName: string) {
+  return async (payload?: any) => {
+    return await store().dispatch(`${moduleName}/${actionName}`, payload);
   };
 }
 
