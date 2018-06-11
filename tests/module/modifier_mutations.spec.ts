@@ -11,7 +11,9 @@ function sampleStore() {
         state() {
           return {
             myList: [],
-            myMap: {}
+            myMap: {
+              abc: undefined
+            }
           };
         }
       })
@@ -22,37 +24,21 @@ function sampleStore() {
 describe("Default mutations", () => {
   it("provide $add for array state", () => {
     const store = sampleStore();
-    store.commit("user/$add", { state: "myList", value: "abc" });
+    store.commit("user/myList$add", "abc");
     expect(store.getters["user/myList"]).toEqual(["abc"]);
   });
   it("provide $delete for array state", () => {
     const store = sampleStore();
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 1, name: "Paul" }
-    });
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 2, name: "John" }
-    });
-    store.commit("user/$delete", {
-      state: "myList",
-      identifier: (x: any) => x.id == 1
-    });
+    store.commit("user/myList$add", { id: 1, name: "Paul" });
+    store.commit("user/myList$add", { id: 2, name: "John" });
+    store.commit("user/myList$delete", (x: any) => x.id == 1);
     expect(store.getters["user/myList"]).toEqual([{ id: 2, name: "John" }]);
   });
   it("provide $update for array state", () => {
     const store = sampleStore();
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 1, name: "Paul" }
-    });
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 2, name: "John" }
-    });
-    store.commit("user/$update", {
-      state: "myList",
+    store.commit("user/myList$add", { id: 1, name: "Paul" });
+    store.commit("user/myList$add", { id: 2, name: "John" });
+    store.commit("user/myList$update", {
       value: { id: 1, name: "Paul Lee" },
       identifier: (x: any) => x.id == 1
     });
@@ -62,18 +48,11 @@ describe("Default mutations", () => {
     ]);
   });
 
-  it("allowes string parameter as identifier for $update", () => {
+  it("allows string parameter as identifier for $update", () => {
     const store = sampleStore();
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 1, name: "Paul" }
-    });
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 2, name: "John" }
-    });
-    store.commit("user/$update", {
-      state: "myList",
+    store.commit("user/myList$add", { id: 1, name: "Paul" });
+    store.commit("user/myList$add", { id: 2, name: "John" });
+    store.commit("user/myList$update", {
       value: { id: 1, name: "Paul Lee" },
       identifier: "id"
     });
@@ -85,18 +64,11 @@ describe("Default mutations", () => {
 
   it("add item when $update failed to find one", () => {
     const store = sampleStore();
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 1, name: "Paul" }
-    });
-    store.commit("user/$add", {
-      state: "myList",
-      value: { id: 2, name: "John" }
-    });
-    store.commit("user/$update", {
-      state: "myList",
+    store.commit("user/myList$add", { id: 1, name: "Paul" });
+    store.commit("user/myList$add", { id: 2, name: "John" });
+    store.commit("user/myList$update", {
       value: { id: 3, name: "Tom" },
-      identifier: (x: any) => x.id == 3
+      identifier: "id"
     });
     expect(store.getters["user/myList"]).toEqual([
       { id: 1, name: "Paul" },
@@ -107,14 +79,14 @@ describe("Default mutations", () => {
 
   it("provide $set for object state", () => {
     const store = sampleStore();
-    store.commit("user/$set", { state: "myMap.abc", value: "def" });
+    store.commit("user/myMap$set", { key: "abc", value: "def" });
     expect(store.getters["user/myMap"]).toEqual({ abc: "def" });
   });
 
-  it("failes to $set when path is wrong", () => {
+  it("fails to $set when path is wrong", () => {
     const store = sampleStore();
     expect(() => {
-      store.commit("user/$set", { state: "myMap2.abc", value: "def" });
+      store.commit("user/myMap$set", { key: "abc2", value: "def" });
     }).toThrow();
   });
 
@@ -125,29 +97,31 @@ describe("Default mutations", () => {
           name: "user",
           state() {
             return {
-              profile: {
-                bio: undefined
+              user: {
+                profile: {
+                  bio: undefined
+                }
               }
             };
           }
         })
       }
     });
-    store.commit("user/$set", { state: "profile.bio", value: "hello" });
-    expect(store.getters["user/profile"]).toEqual({ bio: "hello" });
+    store.commit("user/user$set", { key: "profile.bio", value: "hello" });
+    expect(store.getters["user/user"]).toEqual({ profile: { bio: "hello" } });
   });
 
   it("provide $reset", () => {
     const store = sampleStore();
-    store.commit("user/$add", { state: "myList", value: "hello" });
-    store.commit("user/$reset", "myList");
+    store.commit("user/myList$add", "hello");
+    store.commit("user/myList$reset");
     expect(store.getters["user/myList"]).toEqual([]);
   });
 
   it("provide $resetAll", () => {
     const store = sampleStore();
-    store.commit("user/$add", { state: "myList", value: "hello" });
-    store.commit("user/$set", { state: "myMap.abc", value: "def" });
+    store.commit("user/myList$add", "hello");
+    store.commit("user/myMap$set", { key: "abc", value: "def" });
     store.commit("user/$resetAll");
     expect(store.getters["user/myList"]).toEqual([]);
     expect(store.getters["user/myMap"]).toEqual({});

@@ -23,13 +23,13 @@ const sampleStore = () => {
 describe("Default getters", () => {
   it("provide $get for object state", () => {
     const store = sampleStore();
-    expect(store.getters["user/$get"]("profile.bio")).toEqual("hello");
+    expect(store.getters["user/profile$get"]("bio")).toEqual("hello");
   });
 
   it("throws error when queried with wrong path", () => {
     const store = sampleStore();
     expect(() => {
-      store.getters["user/$get"]("profile.bioo");
+      store.getters["user/profile$get"]("bioo");
     }).toThrow();
   });
 });

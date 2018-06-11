@@ -3,8 +3,8 @@ import buildState from "./state_builder";
 import buildGetters from "./getters_builder";
 import buildMutations from "./mutations_builder";
 import buildActions from "./actions_builder";
-import defaultGetters from "./default_getters";
-import defaultMutations from "./default_mutations";
+import modifierGetters from "./modifier_getters";
+import modifierMutations from "./modifier_mutations";
 import { Module as VuexModuleType } from "vuex";
 
 const Module = {
@@ -14,12 +14,12 @@ const Module = {
       namespaced: true,
       state: buildState(buildConfig),
       getters: {
-        ...defaultGetters(initialState),
+        ...modifierGetters(initialState),
         ...buildGetters(initialState),
         ...buildConfig.getters
       },
       mutations: {
-        ...defaultMutations(initialState),
+        ...modifierMutations(initialState),
         ...buildMutations(initialState),
         ...buildConfig.mutations
       },

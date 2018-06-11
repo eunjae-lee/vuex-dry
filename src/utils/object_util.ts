@@ -10,9 +10,8 @@ export function isValidPath(obj: object, key: string) {
   return result;
 }
 
-export function dig(obj: any, key: string) {
+function digWithKeys(obj: any, keys: Array<string>) {
   let o = obj;
-  const keys = key.split(".");
   keys.forEach((k: string, index: number) => {
     if (!o[k]) {
       throw new Error(`${keys.slice(0, index + 1).join(".")} is ${o[k]}`);
@@ -20,4 +19,17 @@ export function dig(obj: any, key: string) {
     o = o[k];
   });
   return o;
+}
+
+export function dig(obj: any, key: string) {
+  return digWithKeys(obj, key.split("."));
+}
+
+export function deepSet(obj: any, key: string, value: any) {
+  const keys = key.split(".");
+  const keysExceptForTheLast = keys.slice(0, keys.length - 1);
+  const lastKey = keys[keys.length - 1];
+
+  const leafObject = digWithKeys(obj, keysExceptForTheLast);
+  leafObject[lastKey] = value;
 }
