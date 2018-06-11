@@ -5,7 +5,7 @@
 # Install
 
 ```bash
-npm i vuex-dry -D
+npm i vuex-dry -S
 ```
 
 Add the plugin to your vuex store.
