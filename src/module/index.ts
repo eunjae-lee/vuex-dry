@@ -26,7 +26,8 @@ const Module = {
       actions: {
         ...buildActions(initialState),
         ...buildConfig.actions
-      }
+      },
+      modules: buildConfig.modules
     };
   }
 };

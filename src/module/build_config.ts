@@ -2,7 +2,8 @@ import {
   Module as VuexModule,
   GetterTree,
   ActionTree,
-  MutationTree
+  MutationTree,
+  ModuleTree
 } from "vuex";
 
 interface BuildConfig {
@@ -11,6 +12,7 @@ interface BuildConfig {
   getters?: GetterTree<any, any>;
   actions?: ActionTree<any, any>;
   mutations?: MutationTree<any>;
+  modules?: ModuleTree<any>;
 }
 
 export default BuildConfig;
