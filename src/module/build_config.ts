@@ -5,7 +5,7 @@ import {
   MutationTree
 } from "vuex";
 
-interface ModuleBuildConfig {
+interface BuildConfig {
   name: string;
   state: Function;
   getters?: GetterTree<any, any>;
@@ -13,4 +13,4 @@ interface ModuleBuildConfig {
   mutations?: MutationTree<any>;
 }
 
-export default ModuleBuildConfig;
+export default BuildConfig;
