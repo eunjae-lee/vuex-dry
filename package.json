@@ -8,7 +8,8 @@
     "prepublishOnly": "npm run build",
     "build": "bili",
     "test": "jest",
-    "autotest": "npm test -- --watch"
+    "autotest": "npm test -- --watch",
+    "patch": "npm version patch && npm publish && git push"
   },
   "repository": {
     "type": "git",
