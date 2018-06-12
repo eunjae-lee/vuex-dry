@@ -1,7 +1,6 @@
 <p align="center"><img width="256" src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png"></p>
 
-
-# Introduction
+## Introduction
 
 `vuex-dry` helps keep your vuex code DRY.
 It doesn't introduce any whole new way to use vuex.
@@ -9,7 +8,7 @@ It just helps build modules for you with a minimum amount of code, adding some c
 
 `vuex-dry` is TypeScript-friendly since it's written in TypeScript.
 
-# Table of contents
+## Table of contents
 
 <!-- toc -->
 
@@ -23,7 +22,7 @@ It just helps build modules for you with a minimum amount of code, adding some c
 
 <!-- tocstop -->
 
-# Install
+## Install
 
 ```bash
 npm i vuex-dry -S
@@ -40,9 +39,9 @@ new Vuex.Store({
 });
 ```
 
-# Getting Started
+## Getting Started
 
-## Simple Module
+### Simple Module
 
 ```js
 import { Module } from "vuex-dry";
@@ -124,7 +123,7 @@ The followings are added to your module:
 
 These are always repeated every time we write vuex code. And now you don't need them anymore.
 
-## So, why `vuex-dry`?
+### So, why `vuex-dry`?
 
 It keeps your code DRY. You don't have to write meaningless similar codes over and over again.
 
@@ -134,14 +133,14 @@ It keeps your code DRY. You don't have to write meaningless similar codes over a
 
 On the other hand, `vuex-dry` just simply creates vuex modules and they are completely compatible with your existing vuex store and modules. And since it's creating pure vuex modules, you can extend it as you want. It's highly customizable. In that sense, it's really easy to introduce `vuex-dry` into your current project and you don't even have to replace all your vuex codes with `vuex-dry`. You can partially adjust `vuex-dry` and there's no problem with that.
 
-# READ THESE if you'll actually start working with `vuex-dry`
+## READ THESE if you'll actually start working with `vuex-dry`
 
 - [Adding your own getters, mutations and actions](https://github.com/eunjae-lee/vuex-dry/wiki/Adding-your-own-getters,-mutations-and-actions)
 - [Module with Array state](https://github.com/eunjae-lee/vuex-dry/wiki/Module-with-Array-state)
 - [Module with Object state](https://github.com/eunjae-lee/vuex-dry/wiki/Module-with-Object-state)
 - [Component side mapping](https://github.com/eunjae-lee/vuex-dry/wiki/Component-side-mapping)
 
-# Contributing
+## Contributing
 
 1.  Fork it!
 2.  Create your feature branch: git checkout -b my-new-feature
@@ -149,6 +148,6 @@ On the other hand, `vuex-dry` just simply creates vuex modules and they are comp
 4.  Push to the branch: git push origin my-new-feature
 5.  Submit a pull request :D
 
-# Author
+## Author
 
 Eunjae Lee, Released under the [MIT](https://github.com/eunjae-lee/vuex-dry/blob/master/LICENSE.md) License.
