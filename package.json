@@ -9,8 +9,8 @@
     "build": "bili",
     "test": "jest",
     "autotest": "npm test -- --watch",
-    "patch": "npm version patch && npm publish && git push",
-    "minor": "npm version minor && npm publish && git push",
+    "patch": "git pull && npm version patch && npm publish && git push",
+    "minor": "git pull && npm version minor && npm publish && git push",
     "toc": "markdown-toc -i README.md --maxdepth=3"
   },
   "repository": {
