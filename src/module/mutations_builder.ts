@@ -49,11 +49,27 @@ const makeUpdate = (stateName: string) => {
 
 const makeSet = (stateName: string) => {
   return (state: any, payload: ObjectSetPayload) => {
-    const checkPathValidation = !(payload.strict === false);
-    if (checkPathValidation && !isValidPath(state[stateName], payload.key)) {
-      throw new Error(`${payload.key} is not valid path.`);
+    if (payload.strict === false) {
+      if (!state[stateName]) {
+        throw new Error(`${stateName} does not exist in state.`);
+      }
+      const keys = payload.key.split(".");
+      const keysExceptForLast = keys.slice(0, keys.length - 1);
+      const lastKey = keys[keys.length - 1];
+      let obj = state[stateName];
+      keysExceptForLast.forEach(key => {
+        if (!obj.hasOwnProperty(key)) {
+          obj[key] = {};
+        }
+        obj = obj[key];
+      });
+      obj[lastKey] = payload.value;
+    } else {
+      if (!isValidPath(state[stateName], payload.key)) {
+        throw new Error(`${payload.key} is not valid path.`);
+      }
+      deepSet(state[stateName], payload.key, payload.value);
     }
-    deepSet(state[stateName], payload.key, payload.value);
   };
 };
 
