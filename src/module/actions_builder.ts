@@ -1,25 +1,29 @@
-import { Action, ActionTree, ActionContext } from "vuex";
+import { ActionTree, ActionContext } from "vuex";
 
-function actionName(key: string) {
-  return `${key}$assign`;
-}
-
-function mutationName(key: string) {
-  return actionName(key);
-}
-
-function action(key: string): Action<any, any> {
+const makeAssign = (stateName: string) => {
   return (context: ActionContext<any, any>, payload: any) =>
-    context.commit(mutationName(key), payload);
-}
+    context.commit(`${stateName}$assign`, payload);
+};
+
+const makeReset = (stateName: string) => {
+  return (context: ActionContext<any, any>) =>
+    context.commit(`${stateName}$reset`);
+};
+
+const makeResetAll = () => {
+  return (context: ActionContext<any, any>) => context.commit("$resetAll");
+};
 
 function build(initialState: any): ActionTree<any, any> {
   return Object.keys(initialState).reduce(
-    (acc: any, key: string, index: number) => {
-      acc[actionName(key)] = action(key);
+    (acc: any, stateName: string, index: number) => {
+      acc[`${stateName}$assign`] = makeAssign(stateName);
+      acc[`${stateName}$reset`] = makeReset(stateName);
       return acc;
     },
-    {}
+    {
+      $resetAll: makeResetAll()
+    }
   );
 }
 

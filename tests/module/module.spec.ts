@@ -48,6 +48,20 @@ describe("Module", () => {
     expect(store.getters["user/name"]).toEqual("John");
   });
 
+  it("adds `$reset` to mutations", () => {
+    const store = sampleStore();
+    store.dispatch("user/name$assign", "John");
+    store.commit("user/name$reset");
+    expect(store.getters["user/name"]).toEqual("Paul");
+  });
+
+  it("adds `$reset` to actions", async () => {
+    const store = sampleStore();
+    await store.dispatch("user/name$assign", "John");
+    await store.dispatch("user/name$reset");
+    expect(store.getters["user/name"]).toEqual("Paul");
+  });
+
   it("let us add getters", () => {
     const store = new Vuex.Store({
       modules: {
