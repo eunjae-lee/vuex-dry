@@ -20,7 +20,7 @@ store.commit("myModule/user$set", {
 });
 ```
 
-This enables you can add any key dynamically.
+This enables you can add keys dynamically.
 
 ## 0.1.0 (12/Jun/2018)
 
