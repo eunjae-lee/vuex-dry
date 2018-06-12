@@ -7,7 +7,6 @@ import {
 } from "vuex";
 
 interface BuildConfig {
-  name: string;
   state: Function;
   getters?: GetterTree<any, any>;
   actions?: ActionTree<any, any>;

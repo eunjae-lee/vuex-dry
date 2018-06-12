@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 const sampleStore = () => {
   const owner = Module.build({
-    name: "owner",
     state() {
       return {
         name: "owner name",
@@ -17,7 +16,6 @@ const sampleStore = () => {
   });
 
   const company = Module.build({
-    name: "company",
     state() {
       return {
         name: "my company"

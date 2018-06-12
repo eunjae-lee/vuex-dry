@@ -7,7 +7,6 @@ function sampleStore() {
   return new Vuex.Store({
     modules: {
       user: Module.build({
-        name: "user",
         state() {
           return {
             myList: [],
@@ -94,7 +93,6 @@ describe("Default mutations", () => {
     const store = new Vuex.Store({
       modules: {
         user: Module.build({
-          name: "user",
           state() {
             return {
               user: {

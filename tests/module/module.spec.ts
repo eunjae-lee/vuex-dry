@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 const sampleModule = () => {
   return Module.build({
-    name: "user",
     state() {
       return {
         name: "Paul"
@@ -53,7 +52,6 @@ describe("Module", () => {
     const store = new Vuex.Store({
       modules: {
         user: Module.build({
-          name: "user",
           state() {
             return {
               name: "Paul"
@@ -72,7 +70,6 @@ describe("Module", () => {
     const store = new Vuex.Store({
       modules: {
         user: Module.build({
-          name: "user",
           state() {
             return {
               name: "Paul"
@@ -92,7 +89,6 @@ describe("Module", () => {
     const store = new Vuex.Store({
       modules: {
         user: Module.build({
-          name: "user",
           state() {
             return {
               name: "Paul"
