@@ -1,4 +1,5 @@
-<img src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png" style="display: block; margin-left: auto; margin-right: auto; width: 50%" />
+<p align="center"><img width="256" src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png"></p>
+
 
 # Introduction
 
