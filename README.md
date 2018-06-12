@@ -1,3 +1,6 @@
+<p align="center"><img width="256" src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png"></p>
+
+
 # Introduction
 
 `vuex-dry` helps keep your vuex code DRY.
