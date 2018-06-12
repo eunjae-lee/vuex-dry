@@ -1,13 +1,35 @@
 import { Getter, GetterTree } from "vuex";
 import { isValidPath, dig } from "../utils/object_util";
 
+interface ObjectGetPayload {
+  key: string;
+  strict: boolean;
+}
+
+const getStrictly = (
+  state: any,
+  stateName: string,
+  key: string,
+  initialState: any
+) => {
+  const fullPath = `${stateName}.${key}`;
+  if (!isValidPath(initialState, fullPath)) {
+    throw new Error(`${key} is invalid path.`);
+  }
+  return dig(state, fullPath);
+};
+
 const makeGet = (initialState: any, stateName: string): Getter<any, any> => {
-  return (state: any) => (key: string) => {
-    const fullPath = `${stateName}.${key}`;
-    if (!isValidPath(initialState, fullPath)) {
-      throw new Error(`${key} is invalid path.`);
+  return (state: any) => (payload: string | ObjectGetPayload) => {
+    if (typeof payload == "string") {
+      return getStrictly(state, stateName, payload, initialState);
+    } else {
+      if (payload.strict === false) {
+        return dig(state, `${stateName}.${payload.key}`, false);
+      } else {
+        return getStrictly(state, stateName, payload.key, initialState);
+      }
     }
-    return dig(state, fullPath);
   };
 };
 

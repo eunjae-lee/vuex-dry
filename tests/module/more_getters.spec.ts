@@ -33,6 +33,37 @@ describe("Default getters", () => {
     }).toThrow();
   });
 
+  it("provide `strict: false` for $get", () => {
+    const store = sampleStore();
+    expect(
+      store.getters["user/profile$get"]({ key: "bio", strict: false })
+    ).toEqual("hello");
+  });
+
+  it("provide `strict: false` for $get (2)", () => {
+    const store = sampleStore();
+    store.commit("user/profile$set", {
+      key: "twitter",
+      value: "abc",
+      strict: false
+    });
+    expect(
+      store.getters["user/profile$get"]({ key: "twitter", strict: false })
+    ).toEqual("abc");
+  });
+
+  it("provide `strict: false` for $get (3)", () => {
+    const store = sampleStore();
+    store.commit("user/profile$set", {
+      key: "twitter",
+      value: "abc",
+      strict: false
+    });
+    expect(function() {
+      store.getters["user/profile$get"]({ key: "twitter" });
+    }).toThrowError();
+  });
+
   it("provide $find for array state", () => {
     const store = sampleStore();
     store.commit("user/posts$add", { id: 1, title: "hello" });
