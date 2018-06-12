@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png" style="display: block; margin-left: auto; margin-right: auto; width: 50%" />
+
 # Introduction
 
 `vuex-dry` helps keep your vuex code DRY.
