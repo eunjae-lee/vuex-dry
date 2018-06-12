@@ -9,6 +9,7 @@ interface ArrayUpdatePayload {
 interface ObjectSetPayload {
   key: string;
   value: any;
+  strict?: boolean;
 }
 
 const testFn = (test: Function | string, value: any) => {
@@ -48,7 +49,8 @@ const makeUpdate = (stateName: string) => {
 
 const makeSet = (stateName: string) => {
   return (state: any, payload: ObjectSetPayload) => {
-    if (!isValidPath(state[stateName], payload.key)) {
+    const checkPathValidation = !(payload.strict === false);
+    if (checkPathValidation && !isValidPath(state[stateName], payload.key)) {
       throw new Error(`${payload.key} is not valid path.`);
     }
     deepSet(state[stateName], payload.key, payload.value);
