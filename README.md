@@ -123,3 +123,15 @@ On the other hand, `vuex-dry` just simply creates vuex modules and they are comp
 - [Module with Array state](https://github.com/eunjae-lee/vuex-dry/wiki/Module-with-Array-state)
 - [Module with Object state](https://github.com/eunjae-lee/vuex-dry/wiki/Module-with-Object-state)
 - [Component side mapping](https://github.com/eunjae-lee/vuex-dry/wiki/Component-side-mapping)
+
+# Contributing
+
+1.  Fork it!
+2.  Create your feature branch: git checkout -b my-new-feature
+3.  Commit your changes: git commit -am 'Add some feature'
+4.  Push to the branch: git push origin my-new-feature
+5.  Submit a pull request :D
+
+# Author
+
+Eunjae Lee, Released under the [MIT](https://github.com/eunjae-lee/vuex-dry/blob/master/LICENSE.md) License.
