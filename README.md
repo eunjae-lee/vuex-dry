@@ -6,13 +6,14 @@ It just helps build modules for you with a minimum amount of code, adding some c
 
 `vuex-dry` is TypeScript-friendly since it's written in TypeScript.
 
+# Table of contents
+
 <!-- toc -->
 
 - [Install](#install)
 - [Getting Started](#getting-started)
   * [Simple Module](#simple-module)
   * [So, why `vuex-dry`?](#so-why-vuex-dry)
-    + [Then why not `vuex-pathify`?](#then-why-not-vuex-pathify)
 - [READ THESE if you'll actually start working with `vuex-dry`](#read-these-if-youll-actually-start-working-with-vuex-dry)
 - [Contributing](#contributing)
 - [Author](#author)
@@ -124,7 +125,7 @@ These are always repeated every time we write vuex code. And now you don't need 
 
 It keeps your code DRY. You don't have to write meaningless similar codes over and over again.
 
-### Then why not `vuex-pathify`?
+#### Then why not `vuex-pathify`?
 
 `vuex-pathify` is a great library. It let you do things without any coding but just with conventions. A downside is it introduces its own conventions and once you get started with it, you're in a whole new thing. In the inside, you're using vuex through `vuex-pathify`, but on the outside you actually are not using `vuex` anymore.
 
