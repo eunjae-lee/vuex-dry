@@ -12,14 +12,14 @@ const makeGet = (initialState: any, stateName: string): Getter<any, any> => {
 };
 
 const makeFind = (stateName: string): Getter<any, any> => {
-  return (state: any) => (identifier: Function) => {
-    return state[stateName].find(identifier);
+  return (state: any) => (test: Function) => {
+    return state[stateName].find(test);
   };
 };
 
 const makeFilter = (stateName: string): Getter<any, any> => {
-  return (state: any) => (identifier: Function) => {
-    return state[stateName].filter(identifier);
+  return (state: any) => (test: Function) => {
+    return state[stateName].filter(test);
   };
 };
 const makeGetter = (stateName: string) => {

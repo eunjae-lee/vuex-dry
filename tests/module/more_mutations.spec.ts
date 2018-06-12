@@ -39,7 +39,7 @@ describe("Default mutations", () => {
     store.commit("user/myList$add", { id: 2, name: "John" });
     store.commit("user/myList$update", {
       value: { id: 1, name: "Paul Lee" },
-      identifier: (x: any) => x.id == 1
+      test: (x: any) => x.id == 1
     });
     expect(store.getters["user/myList"]).toEqual([
       { id: 1, name: "Paul Lee" },
@@ -47,13 +47,13 @@ describe("Default mutations", () => {
     ]);
   });
 
-  it("allows string parameter as identifier for $update", () => {
+  it("allows string parameter as test for $update", () => {
     const store = sampleStore();
     store.commit("user/myList$add", { id: 1, name: "Paul" });
     store.commit("user/myList$add", { id: 2, name: "John" });
     store.commit("user/myList$update", {
       value: { id: 1, name: "Paul Lee" },
-      identifier: "id"
+      test: "id"
     });
     expect(store.getters["user/myList"]).toEqual([
       { id: 1, name: "Paul Lee" },
@@ -67,7 +67,7 @@ describe("Default mutations", () => {
     store.commit("user/myList$add", { id: 2, name: "John" });
     store.commit("user/myList$update", {
       value: { id: 3, name: "Tom" },
-      identifier: "id"
+      test: "id"
     });
     expect(store.getters["user/myList"]).toEqual([
       { id: 1, name: "Paul" },

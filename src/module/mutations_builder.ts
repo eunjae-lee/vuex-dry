@@ -3,7 +3,7 @@ import { isValidPath, deepSet } from "../utils/object_util";
 
 interface ArrayUpdatePayload {
   value: any;
-  identifier: Function | string;
+  test: Function | string;
 }
 
 interface ObjectSetPayload {
@@ -11,11 +11,11 @@ interface ObjectSetPayload {
   value: any;
 }
 
-const identifierFn = (identifier: Function | string, value: any) => {
-  if (identifier instanceof Function) {
-    return identifier;
-  } else if (typeof identifier == "string") {
-    return (item: any) => item[identifier] == value[identifier];
+const testFn = (test: Function | string, value: any) => {
+  if (test instanceof Function) {
+    return test;
+  } else if (typeof test == "string") {
+    return (item: any) => item[test] == value[test];
   }
 };
 
@@ -26,8 +26,8 @@ const makeAdd = (stateName: string) => {
 };
 
 const makeDelete = (stateName: string) => {
-  return (state: any, identifier: Function) => {
-    const index = state[stateName].findIndex(identifier);
+  return (state: any, test: Function) => {
+    const index = state[stateName].findIndex(test);
     if (index != -1) {
       state[stateName].splice(index, 1);
     }
@@ -36,8 +36,8 @@ const makeDelete = (stateName: string) => {
 
 const makeUpdate = (stateName: string) => {
   return (state: any, payload: ArrayUpdatePayload) => {
-    const identifier = identifierFn(payload.identifier, payload.value);
-    const index = state[stateName].findIndex(identifier);
+    const test = testFn(payload.test, payload.value);
+    const index = state[stateName].findIndex(test);
     if (index == -1) {
       state[stateName].push(payload.value);
     } else {
