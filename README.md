@@ -6,6 +6,19 @@ It just helps build modules for you with a minimum amount of code, adding some c
 
 `vuex-dry` is TypeScript-friendly since it's written in TypeScript.
 
+<!-- toc -->
+
+- [Install](#install)
+- [Getting Started](#getting-started)
+  * [Simple Module](#simple-module)
+  * [So, why `vuex-dry`?](#so-why-vuex-dry)
+    + [Then why not `vuex-pathify`?](#then-why-not-vuex-pathify)
+- [READ THESE if you'll actually start working with `vuex-dry`](#read-these-if-youll-actually-start-working-with-vuex-dry)
+- [Contributing](#contributing)
+- [Author](#author)
+
+<!-- tocstop -->
+
 # Install
 
 ```bash

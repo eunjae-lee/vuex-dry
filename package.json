@@ -9,7 +9,8 @@
     "build": "bili",
     "test": "jest",
     "autotest": "npm test -- --watch",
-    "patch": "npm version patch && npm publish && git push"
+    "patch": "npm version patch && npm publish && git push",
+    "toc": "markdown-toc -i README.md"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@types/jest": "^23.0.0",
     "bili": "^3.1.2",
     "jest": "^23.1.0",
+    "markdown-toc": "^1.2.0",
     "rollup-plugin-typescript2": "^0.14.0",
     "ts-jest": "^22.4.6",
     "typescript": "^2.9.1",
