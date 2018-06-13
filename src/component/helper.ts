@@ -22,7 +22,7 @@ export function sync(type: string) {
       return store().getters[type];
     },
     set(value: any) {
-      store().commit(type, value);
+      store().commit(`${type}$assign`, value);
     }
   };
 }
