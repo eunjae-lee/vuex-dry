@@ -9,7 +9,12 @@ const sampleModule = () => {
   return Module.build({
     state() {
       return {
-        name: "Paul"
+        name: "Paul",
+        meta: {
+          profile: {
+            bio: "hello"
+          }
+        }
       };
     }
   });
@@ -51,5 +56,22 @@ describe("Component Helper", () => {
 
     property.set("John");
     expect(property.get()).toEqual("John");
+  });
+
+  it("get() with nested path", () => {
+    const store = sampleStore();
+    cachedStore.set(store);
+
+    expect(get("user/meta", "profile.bio")()).toEqual("hello");
+  });
+
+  it("sync() with nested path", () => {
+    const store = sampleStore();
+    cachedStore.set(store);
+
+    const property = sync("user/meta", "profile.bio");
+    expect(property.get()).toEqual("hello");
+    property.set("world");
+    expect(get("user/meta")).toEqual({ profile: { bio: "world" } });
   });
 });
