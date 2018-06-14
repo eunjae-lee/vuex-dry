@@ -8,18 +8,6 @@ It just helps build modules for you with a minimum amount of code, adding some c
 
 `vuex-dry` is TypeScript-friendly since it's written in TypeScript.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Install](#install)
-- [Getting Started](#getting-started)
-- [Interested?](#interested)
-- [Contributing](#contributing)
-- [Author](#author)
-
-<!-- tocstop -->
-
 <!-- basic -->
 
 ## Install

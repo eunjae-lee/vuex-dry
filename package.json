@@ -11,9 +11,8 @@
     "autotest": "npm test -- --watch",
     "patch": "git pull && npm version patch && npm publish && git push",
     "minor": "git pull && npm version minor && npm publish && git push",
-    "toc_readme": "markdown-toc -i README.md --maxdepth=2",
     "toc_document": "markdown-toc -i DOCUMENT.md --maxdepth=2",
-    "doc": "node doc.js && npm run toc_readme && npm run toc_document"
+    "doc": "node doc.js && npm run toc_document"
   },
   "repository": {
     "type": "git",
