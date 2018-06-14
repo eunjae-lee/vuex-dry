@@ -127,7 +127,7 @@ These are always repeated every time we write vuex code. And now you don't need 
 
 ## Interested?
 
-Let's go read the full document. Let me show you how easy to access/handle arrays and objects.
+Let me show you how easy you can access/handle arrays and objects with `vuex-dry`.
 
 And you will see how to map those getters in your component and you even can map a specific nested property of an object.
 
