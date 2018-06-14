@@ -72,6 +72,6 @@ describe("Component Helper", () => {
     const property = sync("user/meta", "profile.bio");
     expect(property.get()).toEqual("hello");
     property.set("world");
-    expect(get("user/meta")).toEqual({ profile: { bio: "world" } });
+    expect(get("user/meta")()).toEqual({ profile: { bio: "world" } });
   });
 });
