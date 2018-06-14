@@ -131,7 +131,7 @@ Let's go read the full document. Let me show you how easy to access/handle array
 
 And you will see how to map those getters in your component and you even can map a specific nested property of an object.
 
-READ WIKI
+➡️ [READ THE FULL DOCUMENT📜](https://github.com/eunjae-lee/vuex-dry/blob/master/DOCUMENT.md#adding-your-own-getters-mutations-and-actions) (It will probably take only 3 minutes)
 
 ## Contributing
 
