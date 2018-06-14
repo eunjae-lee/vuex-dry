@@ -1,5 +1,6 @@
 import { MutationTree } from "vuex";
 import { isValidPath, deepSet } from "../utils/object_util";
+import { StateConfig } from "./build_config";
 
 interface ArrayUpdatePayload {
   value: any;
@@ -47,9 +48,12 @@ const makeUpdate = (stateName: string) => {
   };
 };
 
-const makeSet = (stateName: string) => {
+const makeSet = (stateName: string, config?: StateConfig) => {
+  const nonStrictState =
+    ((config || {}).nonStrictObject || []).indexOf(stateName) != -1;
+
   return (state: any, payload: ObjectSetPayload) => {
-    if (payload.strict === false) {
+    if (payload.strict === false || nonStrictState) {
       if (!state[stateName]) {
         throw new Error(`${stateName} does not exist in state.`);
       }
@@ -91,7 +95,7 @@ const makeAssign = (stateName: string) => {
   return (state: any, payload: any) => (state[stateName] = payload);
 };
 
-function build(initialState: any): MutationTree<any> {
+function build(initialState: any, config?: StateConfig): MutationTree<any> {
   return Object.keys(initialState).reduce(
     (acc: any, stateName: string) => {
       if (Array.isArray(initialState[stateName])) {
@@ -99,7 +103,7 @@ function build(initialState: any): MutationTree<any> {
         acc[`${stateName}$delete`] = makeDelete(stateName);
         acc[`${stateName}$update`] = makeUpdate(stateName);
       } else if (initialState[stateName] instanceof Object) {
-        acc[`${stateName}$set`] = makeSet(stateName);
+        acc[`${stateName}$set`] = makeSet(stateName, config);
       }
       acc[`${stateName}$assign`] = makeAssign(stateName);
       acc[`${stateName}$reset`] = makeReset(stateName, initialState);

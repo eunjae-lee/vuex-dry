@@ -12,11 +12,11 @@ const Module = {
       namespaced: true,
       state: buildState(buildConfig),
       getters: {
-        ...buildGetters(initialState),
+        ...buildGetters(initialState, buildConfig.config),
         ...buildConfig.getters
       },
       mutations: {
-        ...buildMutations(initialState),
+        ...buildMutations(initialState, buildConfig.config),
         ...buildConfig.mutations
       },
       actions: {
