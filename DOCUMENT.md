@@ -1,3 +1,5 @@
+<p align="center"><img width="256" src="https://raw.githubusercontent.com/eunjae-lee/vuex-dry/master/logo.png"></p>
+
 # Document
 
 <!-- toc -->
