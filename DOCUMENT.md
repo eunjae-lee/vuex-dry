@@ -1,4 +1,4 @@
-# Full document
+# Document
 
 <!-- toc -->
 
