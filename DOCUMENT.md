@@ -374,7 +374,7 @@ methods: {
 this.load();
 ```
 
-You can pass one parameter of payload when you need it.
+You can pass one optional parameter when needed.
 
 ```js
 this.updateName("Paul");
