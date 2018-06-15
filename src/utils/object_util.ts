@@ -40,3 +40,15 @@ export function deepSet(obj: any, key: string, value: any) {
   const leafObject = digWithKeys(obj, keysExceptForTheLast, true);
   leafObject[lastKey] = value;
 }
+
+export function buildNestedObject(keys: Array<string>, leafValue: any) {
+  const obj = {};
+  keys.reduce((acc: any, key, index, keys) => {
+    if (keys.length - 1 == index) {
+      acc[key] = leafValue;
+    } else {
+      acc[key] = {};
+    }
+    return acc[key];
+  }, obj);
+}
