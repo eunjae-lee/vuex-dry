@@ -43,6 +43,19 @@ const sampleStore2 = () => {
     modules: { user: module }
   });
 };
+const sampleStore3 = () => {
+  const module = Module.build({
+    state() {
+      return {
+        list: []
+      };
+    }
+  });
+  return new Vuex.Store({
+    plugins: [plugin],
+    modules: { user: module }
+  });
+};
 
 describe("View Test", () => {
   it("renders a simple component", () => {
@@ -105,5 +118,36 @@ describe("View Test", () => {
     store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
     wrapper.vm.$forceUpdate();
     expect(wrapper.find("p").text()).toEqual("abc");
+  });
+
+  it("works with list", () => {
+    const store = sampleStore3();
+    const comp = {
+      template: `
+        <div>
+          <p v-for="item in list">{{ item.name }}</p>
+        </div>
+      `,
+      store,
+      computed: {
+        list: sync("user/list")
+      }
+    };
+    const wrapper = shallowMount(comp);
+    expect(wrapper.findAll("p").exists()).toBe(false);
+
+    store.commit("user/list$add", { id: 1, name: "first" });
+    expect(wrapper.find("p").text()).toBe("first");
+    store.commit("user/list$add", { id: 2, name: "second" });
+    store.commit("user/list$update", {
+      value: { id: 2, name: "modified_second" },
+      test: "id"
+    });
+    expect(
+      wrapper
+        .findAll("p")
+        .at(1)
+        .text()
+    ).toBe("modified_second");
   });
 });

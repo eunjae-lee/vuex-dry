@@ -51,4 +51,5 @@ export function buildNestedObject(keys: Array<string>, leafValue: any) {
     }
     return acc[key];
   }, obj);
+  return obj;
 }

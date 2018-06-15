@@ -43,7 +43,7 @@ const makeUpdate = (stateName: string) => {
     if (index == -1) {
       state[stateName].push(payload.value);
     } else {
-      state[stateName][index] = payload.value;
+      state[stateName].splice(index, 1, payload.value);
     }
   };
 };

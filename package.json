@@ -9,8 +9,8 @@
     "build": "bili",
     "test": "jest",
     "autotest": "npm test -- --watch",
-    "patch": "git pull && npm version patch && npm publish && git push",
-    "minor": "git pull && npm version minor && npm publish && git push",
+    "patch": "git pull && npm run test && npm version patch && npm publish && git push",
+    "minor": "git pull && npm run test && npm version minor && npm publish && git push",
     "toc_document": "markdown-toc -i DOCUMENT.md --maxdepth=2",
     "doc": "node doc.js && npm run toc_document"
   },
