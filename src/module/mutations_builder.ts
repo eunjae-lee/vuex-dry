@@ -1,5 +1,5 @@
 import { MutationTree } from "vuex";
-import { isValidPath, deepSet, buildNestedObject } from "../utils/object_util";
+import { isValidPath, deepSet } from "../utils/object_util";
 import BuildConfig, { StateConfig } from "./build_config";
 
 interface ArrayUpdatePayload {
@@ -57,8 +57,17 @@ const makeSet = (stateName: string, config?: StateConfig) => {
       if (!state[stateName]) {
         throw new Error(`${stateName} does not exist in state.`);
       }
-      const obj = buildNestedObject(payload.key.split("."), payload.value);
-      state[stateName] = Object.assign({}, state[stateName], obj);
+      const keys = payload.key.split(".");
+      const keysExceptForLast = keys.slice(0, keys.length - 1);
+      const lastKey = keys[keys.length - 1];
+      let obj = state[stateName];
+      keysExceptForLast.forEach(key => {
+        if (!obj.hasOwnProperty(key)) {
+          obj[key] = {};
+        }
+        obj = obj[key];
+      });
+      obj[lastKey] = payload.value;
     } else {
       if (!isValidPath(state[stateName], payload.key)) {
         throw new Error(`${payload.key} is not valid path.`);

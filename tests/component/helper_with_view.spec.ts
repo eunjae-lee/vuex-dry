@@ -27,23 +27,6 @@ const sampleStore = () => {
   });
 };
 
-const sampleStore2 = () => {
-  const module = Module.build({
-    config: {
-      nonStrictObject: ["meta"]
-    },
-    state() {
-      return {
-        meta: {}
-      };
-    }
-  });
-  return new Vuex.Store({
-    plugins: [plugin],
-    modules: { user: module }
-  });
-};
-
 describe("View Test", () => {
   it("renders a simple component", () => {
     const comp = {
@@ -82,28 +65,11 @@ describe("View Test", () => {
       template: "<p>{{ bio }}</p>",
       store,
       computed: {
-        bio: sync("user/meta", "profile.bio")
+        bio: get("user/meta", "profile.bio")
       }
     };
     const wrapper = shallowMount(comp);
-    expect(wrapper.find("p").text()).toEqual("hello");
     store.commit("user/meta$set", { key: "profile.bio", value: "world" });
     expect(wrapper.find("p").text()).toEqual("world");
-  });
-
-  it("sync() value from store with nonStrictObject", () => {
-    const store = sampleStore2();
-    const comp = {
-      template: "<p>{{ username }}</p>",
-      store,
-      computed: {
-        username: sync("user/meta", "twitter.username")
-      }
-    };
-    const wrapper = shallowMount(comp);
-    expect(wrapper.find("p").text()).toEqual("");
-    store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
-    wrapper.vm.$forceUpdate();
-    expect(wrapper.find("p").text()).toEqual("abc");
   });
 });
