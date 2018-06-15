@@ -1,6 +1,6 @@
 import { MutationTree } from "vuex";
 import { isValidPath, deepSet } from "../utils/object_util";
-import { StateConfig } from "./build_config";
+import BuildConfig, { StateConfig } from "./build_config";
 
 interface ArrayUpdatePayload {
   value: any;
@@ -77,14 +77,15 @@ const makeSet = (stateName: string, config?: StateConfig) => {
   };
 };
 
-const makeReset = (stateName: string, initialState: any) => {
+const makeReset = (stateName: string, buildConfig: BuildConfig) => {
   return (state: any) => {
-    state[stateName] = initialState[stateName];
+    state[stateName] = buildConfig.state()[stateName];
   };
 };
 
-const makeResetAll = (initialState: any) => {
+const makeResetAll = (buildConfig: BuildConfig) => {
   return (state: any) => {
+    const initialState = buildConfig.state();
     Object.keys(initialState).forEach((key: string) => {
       state[key] = initialState[key];
     });
@@ -95,7 +96,8 @@ const makeAssign = (stateName: string) => {
   return (state: any, payload: any) => (state[stateName] = payload);
 };
 
-function build(initialState: any, config?: StateConfig): MutationTree<any> {
+function build(buildConfig: BuildConfig): MutationTree<any> {
+  const initialState = buildConfig.state();
   return Object.keys(initialState).reduce(
     (acc: any, stateName: string) => {
       if (Array.isArray(initialState[stateName])) {
@@ -103,14 +105,14 @@ function build(initialState: any, config?: StateConfig): MutationTree<any> {
         acc[`${stateName}$delete`] = makeDelete(stateName);
         acc[`${stateName}$update`] = makeUpdate(stateName);
       } else if (initialState[stateName] instanceof Object) {
-        acc[`${stateName}$set`] = makeSet(stateName, config);
+        acc[`${stateName}$set`] = makeSet(stateName, buildConfig.config);
       }
       acc[`${stateName}$assign`] = makeAssign(stateName);
-      acc[`${stateName}$reset`] = makeReset(stateName, initialState);
+      acc[`${stateName}$reset`] = makeReset(stateName, buildConfig);
       return acc;
     },
     {
-      $resetAll: makeResetAll(initialState)
+      $resetAll: makeResetAll(buildConfig)
     }
   );
 }

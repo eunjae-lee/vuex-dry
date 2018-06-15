@@ -1,4 +1,5 @@
 import { ActionTree, ActionContext } from "vuex";
+import BuildConfig from "./build_config";
 
 const makeAssign = (stateName: string) => {
   return (context: ActionContext<any, any>, payload: any) =>
@@ -14,7 +15,8 @@ const makeResetAll = () => {
   return (context: ActionContext<any, any>) => context.commit("$resetAll");
 };
 
-function build(initialState: any): ActionTree<any, any> {
+function build(buildConfig: BuildConfig): ActionTree<any, any> {
+  const initialState = buildConfig.state();
   return Object.keys(initialState).reduce(
     (acc: any, stateName: string, index: number) => {
       acc[`${stateName}$assign`] = makeAssign(stateName);

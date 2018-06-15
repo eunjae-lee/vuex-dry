@@ -33,6 +33,24 @@ const sampleStore = () => {
   });
 };
 
+const sampleStore2 = () => {
+  const user = Module.build({
+    config: {
+      nonStrictObject: ["profile"]
+    },
+    state() {
+      return {
+        profile: {}
+      };
+    }
+  });
+  return new Vuex.Store({
+    modules: {
+      user
+    }
+  });
+};
+
 describe("Nested module", () => {
   it("works", () => {
     const store = sampleStore();
@@ -47,25 +65,28 @@ describe("Nested module", () => {
   });
 
   it("works with $reset", () => {
-    const user = Module.build({
-      config: {
-        nonStrictObject: ["profile"]
-      },
-      state() {
-        return {
-          profile: {}
-        };
-      }
-    });
-    const store = new Vuex.Store({
-      modules: {
-        user
-      }
-    });
-
+    const store = sampleStore2();
     store.commit("user/profile$set", { key: "bio", value: "hello" });
     expect(store.getters["user/profile$get"]("bio")).toEqual("hello");
     store.commit("user/profile$reset");
+    expect(store.getters["user/profile$get"]("bio")).toEqual(undefined);
+  });
+
+  it("works with several $reset", () => {
+    const store = sampleStore2();
+    store.commit("user/profile$set", { key: "bio", value: "hello" });
+    store.commit("user/profile$reset");
+    store.commit("user/profile$set", { key: "bio", value: "hello" });
+    store.commit("user/profile$reset");
+    expect(store.getters["user/profile$get"]("bio")).toEqual(undefined);
+  });
+
+  it("works with several $resetAll", () => {
+    const store = sampleStore2();
+    store.commit("user/profile$set", { key: "bio", value: "hello" });
+    store.commit("user/$resetAll");
+    store.commit("user/profile$set", { key: "bio", value: "hello" });
+    store.commit("user/$resetAll");
     expect(store.getters["user/profile$get"]("bio")).toEqual(undefined);
   });
 });

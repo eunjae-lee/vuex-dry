@@ -1,6 +1,6 @@
 import { Getter, GetterTree } from "vuex";
 import { isValidPath, dig } from "../utils/object_util";
-import { StateConfig } from "./build_config";
+import BuildConfig, { StateConfig } from "./build_config";
 
 interface ObjectGetPayload {
   key: string;
@@ -55,13 +55,18 @@ const makeGetter = (stateName: string) => {
   return (state: any) => state[stateName];
 };
 
-function build(initialState: any, config?: StateConfig): GetterTree<any, any> {
+function build(buildConfig: BuildConfig): GetterTree<any, any> {
+  const initialState = buildConfig.state();
   return Object.keys(initialState).reduce((acc: any, stateName: string) => {
     if (Array.isArray(initialState[stateName])) {
       acc[`${stateName}$find`] = makeFind(stateName);
       acc[`${stateName}$filter`] = makeFilter(stateName);
     } else if (initialState[stateName] instanceof Object) {
-      acc[`${stateName}$get`] = makeGet(initialState, stateName, config);
+      acc[`${stateName}$get`] = makeGet(
+        initialState,
+        stateName,
+        buildConfig.config
+      );
     }
     acc[stateName] = makeGetter(stateName);
     return acc;
