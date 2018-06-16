@@ -1,6 +1,7 @@
 import { Getter, GetterTree } from "vuex";
-import { isValidPath, dig } from "../utils/object_util";
 import BuildConfig, { StateConfig } from "./build_config";
+import has from "lodash.has";
+import get from "lodash.get";
 
 interface ObjectGetPayload {
   key: string;
@@ -14,10 +15,10 @@ const getStrictly = (
   initialState: any
 ) => {
   const fullPath = `${stateName}.${key}`;
-  if (!isValidPath(initialState, fullPath)) {
+  if (!has(initialState, fullPath)) {
     throw new Error(`${key} is invalid path.`);
   }
-  return dig(state, fullPath);
+  return get(state, fullPath);
 };
 
 const makeGet = (
@@ -33,7 +34,7 @@ const makeGet = (
     const strict = typeof payload == "string" ? true : payload.strict;
 
     if (strict === false || nonStrictState) {
-      return dig(state, `${stateName}.${key}`, false);
+      return get(state, `${stateName}.${key}`);
     } else {
       return getStrictly(state, stateName, key, initialState);
     }

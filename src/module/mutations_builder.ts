@@ -1,6 +1,8 @@
 import { MutationTree } from "vuex";
-import { isValidPath, deepSet, buildNestedObject } from "../utils/object_util";
+import { deepSet, buildNestedObject } from "../utils/object_util";
 import BuildConfig, { StateConfig } from "./build_config";
+import merge from "lodash.merge";
+import has from "lodash.has";
 
 interface ArrayUpdatePayload {
   value: any;
@@ -58,9 +60,9 @@ const makeSet = (stateName: string, config?: StateConfig) => {
         throw new Error(`${stateName} does not exist in state.`);
       }
       const obj = buildNestedObject(payload.key.split("."), payload.value);
-      state[stateName] = Object.assign({}, state[stateName], obj);
+      state[stateName] = merge({}, state[stateName], obj);
     } else {
-      if (!isValidPath(state[stateName], payload.key)) {
+      if (!has(state[stateName], payload.key)) {
         throw new Error(`${payload.key} is not valid path.`);
       }
       deepSet(state[stateName], payload.key, payload.value);

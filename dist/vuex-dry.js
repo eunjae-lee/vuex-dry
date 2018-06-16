@@ -2,64 +2,22 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var has = _interopDefault(require('lodash.has'));
+var get = _interopDefault(require('lodash.get'));
+var merge = _interopDefault(require('lodash.merge'));
+
 function build(buildConfig) {
     return buildConfig.state();
 }
 
-function isValidPath(obj, key) {
-    let o = obj;
-    let result = true;
-    key.split(".").forEach((k) => {
-        if (o) {
-            result = result && o.hasOwnProperty(k);
-            o = o[k];
-        }
-    });
-    return result;
-}
-function digWithKeys(obj, keys, throwWhenInvalidPath) {
-    let o = obj;
-    keys.forEach((k, index) => {
-        if (!o) {
-            return;
-        }
-        if (!o[k] && throwWhenInvalidPath) {
-            throw new Error(`${keys.slice(0, index + 1).join(".")} is ${o[k]}`);
-        }
-        o = o[k];
-    });
-    return o;
-}
-function dig(obj, key, throwWhenInvalidPath = true) {
-    return digWithKeys(obj, key.split("."), throwWhenInvalidPath);
-}
-function deepSet(obj, key, value) {
-    const keys = key.split(".");
-    const keysExceptForTheLast = keys.slice(0, keys.length - 1);
-    const lastKey = keys[keys.length - 1];
-    const leafObject = digWithKeys(obj, keysExceptForTheLast, true);
-    leafObject[lastKey] = value;
-}
-function buildNestedObject(keys, leafValue) {
-    const obj = {};
-    keys.reduce((acc, key, index, keys) => {
-        if (keys.length - 1 == index) {
-            acc[key] = leafValue;
-        }
-        else {
-            acc[key] = {};
-        }
-        return acc[key];
-    }, obj);
-    return obj;
-}
-
 const getStrictly = (state, stateName, key, initialState) => {
     const fullPath = `${stateName}.${key}`;
-    if (!isValidPath(initialState, fullPath)) {
+    if (!has(initialState, fullPath)) {
         throw new Error(`${key} is invalid path.`);
     }
-    return dig(state, fullPath);
+    return get(state, fullPath);
 };
 const makeGet = (initialState, stateName, config) => {
     const nonStrictState = ((config || {}).nonStrictObject || []).indexOf(stateName) != -1;
@@ -67,7 +25,7 @@ const makeGet = (initialState, stateName, config) => {
         const key = typeof payload == "string" ? payload : payload.key;
         const strict = typeof payload == "string" ? true : payload.strict;
         if (strict === false || nonStrictState) {
-            return dig(state, `${stateName}.${key}`, false);
+            return get(state, `${stateName}.${key}`);
         }
         else {
             return getStrictly(state, stateName, key, initialState);
@@ -100,6 +58,33 @@ function build$1(buildConfig) {
         acc[stateName] = makeGetter(stateName);
         return acc;
     }, {});
+}
+
+function deepSet(obj, key, value) {
+    const keys = key.split(".");
+    const keysExceptForTheLast = keys.slice(0, keys.length - 1);
+    const lastKey = keys[keys.length - 1];
+    let leafObject;
+    if (keysExceptForTheLast.length > 0) {
+        leafObject = get(obj, keysExceptForTheLast);
+    }
+    else {
+        leafObject = obj;
+    }
+    leafObject[lastKey] = value;
+}
+function buildNestedObject(keys, leafValue) {
+    const obj = {};
+    keys.reduce((acc, key, index, keys) => {
+        if (keys.length - 1 == index) {
+            acc[key] = leafValue;
+        }
+        else {
+            acc[key] = {};
+        }
+        return acc[key];
+    }, obj);
+    return obj;
 }
 
 const testFn = (test, value) => {
@@ -143,10 +128,10 @@ const makeSet = (stateName, config) => {
                 throw new Error(`${stateName} does not exist in state.`);
             }
             const obj = buildNestedObject(payload.key.split("."), payload.value);
-            state[stateName] = Object.assign({}, state[stateName], obj);
+            state[stateName] = merge({}, state[stateName], obj);
         }
         else {
-            if (!isValidPath(state[stateName], payload.key)) {
+            if (!has(state[stateName], payload.key)) {
                 throw new Error(`${payload.key} is not valid path.`);
             }
             deepSet(state[stateName], payload.key, payload.value);
@@ -222,7 +207,7 @@ const Module = {
 };
 
 let cachedStore = undefined;
-function get() {
+function get$1() {
     if (!cachedStore) {
         throw new Error("You haven't installed the plugin of vuex-dry.");
     }
@@ -232,7 +217,7 @@ function set(store) {
     cachedStore = store;
 }
 var cachedStore$1 = {
-    get,
+    get: get$1,
     set
 };
 
@@ -243,7 +228,7 @@ const plugin = (store) => {
 function store() {
     return cachedStore$1.get();
 }
-function get$1(type, nestedPath) {
+function get$2(type, nestedPath) {
     if (nestedPath) {
         return () => {
             return store().getters[`${type}$get`](nestedPath);
@@ -285,6 +270,6 @@ function sync(type, nestedPath) {
 
 exports.Module = Module;
 exports.plugin = plugin;
-exports.get = get$1;
+exports.get = get$2;
 exports.action = action;
 exports.sync = sync;

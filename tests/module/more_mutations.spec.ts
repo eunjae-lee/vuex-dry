@@ -149,6 +149,36 @@ describe("Default mutations", () => {
     expect(store.getters["user/user"]).toEqual({ profile: { bio: "hello" } });
   });
 
+  it("`$set`s nested properties several times with strict: false", () => {
+    const store = new Vuex.Store({
+      modules: {
+        myModule: Module.build({
+          state() {
+            return {
+              user: {}
+            };
+          }
+        })
+      }
+    });
+    store.commit("myModule/user$set", {
+      key: "profile.bio",
+      value: "hello",
+      strict: false
+    });
+    store.commit("myModule/user$set", {
+      key: "profile.bio2",
+      value: "hello2",
+      strict: false
+    });
+    store.commit("myModule/user$set", {
+      key: "profile.bio3",
+      value: "hello3",
+      strict: false
+    });
+    expect(store.getters["myModule/user"]).toEqual({profile: {bio: "hello", bio2: "hello2", bio3: "hello3"}})
+  })
+
   it("provide $reset", () => {
     const store = sampleStore();
     store.commit("user/myList$add", "hello");
