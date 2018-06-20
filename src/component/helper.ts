@@ -23,7 +23,7 @@ export function action(type: string) {
 }
 
 export function runAction(type: string, payload?: any) {
-  store().dispatch(type, payload);
+  return store().dispatch(type, payload);
 }
 
 export function sync(type: string, nestedPath?: string) {
