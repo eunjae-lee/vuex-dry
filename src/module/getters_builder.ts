@@ -42,8 +42,17 @@ const makeGet = (
 };
 
 const makeFind = (stateName: string): Getter<any, any> => {
-  return (state: any) => (test: Function) => {
-    return state[stateName].find(test);
+  return (state: any) => (...args: Array<any>) => {
+    if (args.length == 1 && args[0] instanceof Function) {
+      const test: Function = args[0];
+      return state[stateName].find(test);
+    } else if (args.length == 2 && typeof args[0] == "string") {
+      const columnName = args[0];
+      const columnValue = args[1];
+      return state[stateName].find((x: any) => x[columnName] == columnValue);
+    } else {
+      throw new Error("Unrecognized parameters for $find");
+    }
   };
 };
 

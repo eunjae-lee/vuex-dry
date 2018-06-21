@@ -258,6 +258,12 @@ It finds one object matching with a testing function from an array.
 const post = store.getters["myModule/posts$find"](post => post.id == 3);
 ```
 
+You can simplify it like this:
+
+```js
+const post = store.getters["myModule/posts$find"]("id", 3);
+```
+
 #### posts$filter
 
 It finds all objects matching with a testing function from an array.
