@@ -121,6 +121,16 @@ And you will see how to map those getters in your component and you even can map
 
 ➡️ [READ THE FULL DOCUMENT📜](https://github.com/eunjae-lee/vuex-dry/blob/master/DOCUMENT.md#adding-your-own-getters-mutations-and-actions) (It will probably take only 3 minutes)
 
+## So, why `vuex-dry`?
+
+It keeps your code DRY. You don't have to write meaningless similar codes over and over again.
+
+### Then why not `vuex-pathify`?
+
+`vuex-pathify` is a great library. It let you do things without any coding but just with conventions. A downside is it introduces its own conventions and once you get started with it, you're in a whole new thing. In the inside, you're using vuex through `vuex-pathify`, but on the outside you actually are not using `vuex` anymore.
+
+On the other hand, `vuex-dry` just simply creates vuex modules and they are completely compatible with your existing vuex store and modules. And since it's creating pure vuex modules, you can extend it as you want. It's highly customizable. In that sense, it's really easy to introduce `vuex-dry` into your current project and you don't even have to replace all your vuex codes with `vuex-dry`. You can partially adjust `vuex-dry` and there's no problem with that.
+
 ## Contributing
 
 1.  Fork it!
