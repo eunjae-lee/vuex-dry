@@ -1,3 +1,11 @@
+## 0.1.14 (21/Jun/2018)
+
+- You can pass key, value for `$find`
+
+```js
+store.getters["myModule/posts$find"]("id", 3);
+```
+
 ## 0.1.5 (14/Jun/2018)
 
 - You can use `get` or `sync` mapper in your component to map nested path of object like the following:
