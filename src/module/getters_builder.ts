@@ -51,7 +51,7 @@ const makeFind = (stateName: string): Getter<any, any> => {
       const value = args[1];
       return state[stateName].find((x: any) => x[key] == value);
     } else {
-      throw new Error("Unrecognized parameters for $find");
+      throw new Error("Invalid parameters for $find");
     }
   };
 };

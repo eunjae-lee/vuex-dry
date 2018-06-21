@@ -30,8 +30,17 @@ const makeAdd = (stateName: string) => {
 };
 
 const makeDelete = (stateName: string) => {
-  return (state: any, test: Function) => {
-    const index = state[stateName].findIndex(test);
+  return (state: any, test: Function | Array<any>) => {
+    let index = -1;
+    if (test instanceof Function) {
+      index = state[stateName].findIndex(test);
+    } else if (Array.isArray(test) && test.length == 2) {
+      const key = test[0];
+      const value = test[1];
+      index = state[stateName].findIndex((x: any) => x[key] == value);
+    } else {
+      throw new Error("Invalid parameters for $delete");
+    }
     if (index != -1) {
       state[stateName].splice(index, 1);
     }

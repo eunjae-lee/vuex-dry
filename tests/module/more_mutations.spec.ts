@@ -33,6 +33,13 @@ describe("Default mutations", () => {
     store.commit("user/myList$delete", (x: any) => x.id == 1);
     expect(store.getters["user/myList"]).toEqual([{ id: 2, name: "John" }]);
   });
+  it("provide $delete for array state with key, value", () => {
+    const store = sampleStore();
+    store.commit("user/myList$add", { id: 1, name: "Paul" });
+    store.commit("user/myList$add", { id: 2, name: "John" });
+    store.commit("user/myList$delete", ["id", 1]);
+    expect(store.getters["user/myList"]).toEqual([{ id: 2, name: "John" }]);
+  });
   it("provide $update for array state", () => {
     const store = sampleStore();
     store.commit("user/myList$add", { id: 1, name: "Paul" });

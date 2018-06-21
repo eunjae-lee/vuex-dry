@@ -290,6 +290,14 @@ It deletes an item matching with a testing function from an array.
 store.commit("myModule/posts$delete", post => post.id == 3);
 ```
 
+You can simplify it like this:
+
+```js
+store.commit("myModule/posts$delete", ["id", 3]);
+```
+
+When you commit, you can pass only one payload, so it has to be in an array with two items like that.
+
 #### posts$update
 
 It updates an item matching with a testing function from an array. If there's no matched item, then the item is added to the array.
