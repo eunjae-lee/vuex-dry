@@ -1,3 +1,4 @@
+import { errorThrower } from "../utils/error_thrower";
 import { MutationTree } from "vuex";
 import { deepSet, buildNestedObject } from "../utils/object_util";
 import BuildConfig, { StateConfig } from "./build_config";
@@ -39,7 +40,16 @@ const makeDelete = (stateName: string) => {
       const value = test[1];
       index = state[stateName].findIndex((x: any) => x[key] == value);
     } else {
-      throw new Error("Invalid parameters for $delete");
+      const e = errorThrower("Invalid parameters for $delete");
+      e.add("You passed wrong parameters for $delete.");
+      e.add(`What you just passed => ${test}`);
+      e.add("You might try again with");
+      e.add("  1. a function");
+      e.add(`       > commit("${stateName}$find", x => x.id == 3)`);
+      e.add("     or");
+      e.add("  2. a key and its expected value");
+      e.add(`       > commit("${stateName}$find", { key: "id", value: 3 })`);
+      e.logAndThrow();
     }
     if (index != -1) {
       state[stateName].splice(index, 1);
@@ -64,17 +74,34 @@ const makeSet = (stateName: string, config?: StateConfig) => {
     ((config || {}).nonStrictObject || []).indexOf(stateName) != -1;
 
   return (state: any, payload: ObjectSetPayload) => {
+    const key = payload.key.toString();
     if (payload.strict === false || nonStrictState) {
       if (!state[stateName]) {
-        throw new Error(`${stateName} does not exist in state.`);
+        const e = errorThrower(`${stateName} does not exist in state.`);
+        e.add(
+          `You tried to set value to state with a key("${stateName}"), but it doesn't exist.`
+        );
+        e.add("Check your module definition again.");
+        e.logAndThrow();
       }
-      const obj = buildNestedObject(payload.key.split("."), payload.value);
+      const obj = buildNestedObject(key.split("."), payload.value);
       state[stateName] = merge({}, state[stateName], obj);
     } else {
-      if (!has(state[stateName], payload.key)) {
-        throw new Error(`${payload.key} is not valid path.`);
+      if (!has(state[stateName], key)) {
+        const e = errorThrower(
+          `Cannot set a key("${key}") at state("${stateName}").`
+        );
+        e.add("You might try to");
+        e.add("  1. check if the key is pre-defined");
+        e.add("     or");
+        e.add("  2. make the state non-strict");
+        e.add("       > To do that, please check the following url");
+        e.add(
+          "         https://github.com/eunjae-lee/vuex-dry/blob/master/DOCUMENT.md#non-strict-object"
+        );
+        e.logAndThrow();
       }
-      deepSet(state[stateName], payload.key, payload.value);
+      deepSet(state[stateName], key, payload.value);
     }
   };
 };
