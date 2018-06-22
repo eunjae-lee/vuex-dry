@@ -232,6 +232,26 @@ store.commit("myModule/user$set", {
 });
 ```
 
+### Non-strict Object
+
+By default, `vuex-dry` checks path of object. So if you try to access a key which is not pre-defined, `vuex-dry` will throw an error.
+However there are times when you just want to set and get properties dynamically.
+
+```js
+Module.build({
+  config: {
+    nonStrictObject: ["user"]
+  },
+  state() {
+    return {
+      user: {}
+    };
+  }
+});
+```
+
+Just like that. You can specify top-level keys at `nonStrictObject` property. In this case, `vuex-dry` will not check validation of paths under `user` object.
+
 ## Module with Array state
 
 Like `vuex-dry` provides object-specific features, it does for array as well.
