@@ -458,3 +458,41 @@ computed: {
 ```
 
 It works just like that.
+
+## Cheat sheet
+
+### common
+
+Let's say you have a state named `whatever`.
+
+| type     |  example         | parameters       |
+|----------|------------------|------------------|
+| mutation | whatever$assign  | commit("whatever$assign", payload) |
+| mutation | whatever$reset   | commit("whatever$reset") |
+| mutation | $resetAll        | commit("$resetAll") |
+| action   | whatever$assign  | dispatch("whatever$assign", payload) |
+| action   | whatever$reset   | dispatch("whatever$reset") |
+| action   | $resetAll        | dispatch("$resetAll") |
+
+
+### array
+
+Let's say you have a state named `posts`.
+
+| type     |  example     | parameters       |
+|----------|--------------|------------------|
+| getter   | posts$find   | 1. getters["posts$find"](fn)<br/>2. getters["posts$find"](key, value) |
+| getter   | posts$filter | getters["posts$filter"](fn) |
+| mutation | posts$add    | commit("posts$add", value) |
+| mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", [key, value]) |
+| mutation | posts$update | 1. commit("posts$update", { value: newPost, test: testFunction })<br/>2. commit("posts$update", { value: newPost, test: "id" }) |
+
+
+### object
+
+Let's say you have a state named `map`.
+
+| type     |  example     | parameters       |
+|----------|--------------|------------------|
+| getter   | map$get      | getters["map$get"]("your.nested.key") |
+| mutation | map$set      | commit("map$set", { key, value } |
