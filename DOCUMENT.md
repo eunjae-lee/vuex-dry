@@ -481,10 +481,10 @@ Let's say you have a state named `posts`.
 
 | type     |  example     | parameters       |
 |----------|--------------|------------------|
-| getter   | posts$find   | 1. getters["posts$find"](fn)<br/>2. getters["posts$find"](key, value) |
-| getter   | posts$filter | getters["posts$filter"](fn) |
+| getter   | posts$find   | 1. getters\["posts$find"](fn)<br/>2. getters\["posts$find"](key, value) |
+| getter   | posts$filter | getters\["posts$filter"](fn) |
 | mutation | posts$add    | commit("posts$add", value) |
-| mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", [key, value]) |
+| mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", \[key, value]) |
 | mutation | posts$update | 1. commit("posts$update", { value: newPost, test: testFunction })<br/>2. commit("posts$update", { value: newPost, test: "id" }) |
 
 
@@ -494,5 +494,5 @@ Let's say you have a state named `map`.
 
 | type     |  example     | parameters       |
 |----------|--------------|------------------|
-| getter   | map$get      | getters["map$get"]("your.nested.key") |
+| getter   | map$get      | getters\["map$get"]("your.nested.key") |
 | mutation | map$set      | commit("map$set", { key, value } |
