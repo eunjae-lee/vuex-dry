@@ -10,7 +10,6 @@
 - [Module with Object state](#module-with-object-state)
 - [Module with Array state](#module-with-array-state)
 - [Component side mapping](#component-side-mapping)
-- [So, why `vuex-dry`?](#so-why-vuex-dry)
 
 <!-- tocstop -->
 
@@ -233,6 +232,26 @@ store.commit("myModule/user$set", {
 });
 ```
 
+### Non-strict Object
+
+By default, `vuex-dry` checks path of object. So if you try to access a key which is not pre-defined, `vuex-dry` will throw an error.
+However there are times when you just want to set and get properties dynamically.
+
+```js
+Module.build({
+  config: {
+    nonStrictObject: ["user"]
+  },
+  state() {
+    return {
+      user: {}
+    };
+  }
+});
+```
+
+Just like that. You can specify top-level keys at `nonStrictObject` property. In this case, `vuex-dry` will not check validation of paths under `user` object.
+
 ## Module with Array state
 
 Like `vuex-dry` provides object-specific features, it does for array as well.
@@ -257,6 +276,12 @@ It finds one object matching with a testing function from an array.
 
 ```js
 const post = store.getters["myModule/posts$find"](post => post.id == 3);
+```
+
+You can simplify it like this:
+
+```js
+const post = store.getters["myModule/posts$find"]("id", 3);
 ```
 
 #### posts$filter
@@ -284,6 +309,14 @@ It deletes an item matching with a testing function from an array.
 ```js
 store.commit("myModule/posts$delete", post => post.id == 3);
 ```
+
+You can simplify it like this:
+
+```js
+store.commit("myModule/posts$delete", ["id", 3]);
+```
+
+When you commit, you can pass only one payload, so it has to be in an array with two items like that.
 
 #### posts$update
 
@@ -425,13 +458,3 @@ computed: {
 ```
 
 It works just like that.
-
-## So, why `vuex-dry`?
-
-It keeps your code DRY. You don't have to write meaningless similar codes over and over again.
-
-### Then why not `vuex-pathify`?
-
-`vuex-pathify` is a great library. It let you do things without any coding but just with conventions. A downside is it introduces its own conventions and once you get started with it, you're in a whole new thing. In the inside, you're using vuex through `vuex-pathify`, but on the outside you actually are not using `vuex` anymore.
-
-On the other hand, `vuex-dry` just simply creates vuex modules and they are completely compatible with your existing vuex store and modules. And since it's creating pure vuex modules, you can extend it as you want. It's highly customizable. In that sense, it's really easy to introduce `vuex-dry` into your current project and you don't even have to replace all your vuex codes with `vuex-dry`. You can partially adjust `vuex-dry` and there's no problem with that.

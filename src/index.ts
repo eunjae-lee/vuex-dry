@@ -1,6 +1,6 @@
 import Module from "./module";
 import plugin from "./component/plugin";
-import { get, action, sync } from "./component/helper";
+import { get, action, runAction, sync } from "./component/helper";
 
 export {
   // store side
@@ -9,5 +9,6 @@ export {
   plugin,
   get,
   action,
+  runAction,
   sync
 };

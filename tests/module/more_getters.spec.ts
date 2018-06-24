@@ -74,6 +74,17 @@ describe("Default getters", () => {
     ).toEqual({ id: 2, title: "world" });
   });
 
+  it("provide $find for array state with two parameters", () => {
+    const store = sampleStore();
+    store.commit("user/posts$add", { id: 1, title: "hello" });
+    store.commit("user/posts$add", { id: 2, title: "world" });
+    store.commit("user/posts$add", { id: 3, title: "!" });
+    expect(store.getters["user/posts$find"]("id", 2)).toEqual({
+      id: 2,
+      title: "world"
+    });
+  });
+
   it("provide $filter for array state", () => {
     const store = sampleStore();
     store.commit("user/posts$add", { id: 1, title: "hello" });
