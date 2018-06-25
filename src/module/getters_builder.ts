@@ -42,7 +42,12 @@ const makeGet = (
     ((config || {}).nonStrictObject || []).indexOf(stateName) != -1;
 
   return (state: any) => (payload: string | ObjectGetPayload) => {
-    const key = typeof payload == "string" ? payload : payload.key.toString();
+    let key = undefined;
+    if (payload instanceof Object && (payload as ObjectGetPayload).key) {
+      key = (payload as ObjectGetPayload).key;
+    } else {
+      key = payload.toString();
+    }
     const strict = typeof payload == "string" ? true : payload.strict;
 
     if (!key) {
