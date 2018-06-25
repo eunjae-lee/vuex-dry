@@ -2,7 +2,7 @@
 
 
 [![Build Status](https://travis-ci.org/eunjae-lee/vuex-dry.svg?branch=master)](https://travis-ci.org/eunjae-lee/vuex-dry)
-[![npm](https://img.shields.io/npm/v/npm.svg)](http://npmjs.com/package/vuex-dry)
+[![npm version](http://img.shields.io/npm/v/vuex-dry.svg)](https://npmjs.org/package/vuex-dry)
 [![GitHub stars](https://img.shields.io/github/stars/eunjae-lee/vuex-dry.svg)](https://github.com/eunjae-lee/vuex-dry/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/eunjae-lee/vuex-dry.svg)](https://github.com/eunjae-lee/vuex-dry/network)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/eunjae-lee/vuex-dry.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Feunjae-lee%2Fvuex-dry)
