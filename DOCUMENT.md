@@ -9,7 +9,7 @@
 - [Adding your own getters, mutations and actions](#adding-your-own-getters-mutations-and-actions)
 - [Module with Object state](#module-with-object-state)
 - [Module with Array state](#module-with-array-state)
-- [Component side mapping](#component-side-mapping)
+- [Component helpers](#component-helpers)
 - [Cheat sheet](#cheat-sheet)
 
 <!-- tocstop -->
