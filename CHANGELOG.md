@@ -1,3 +1,8 @@
+## 0.1.18 (28/Jun/2018)
+
+- You can use `get` and `action` in methods now.
+- `commit` has been added as a component helper.
+
 ## 0.1.14 (21/Jun/2018)
 
 - You can pass key, value for `$find`
