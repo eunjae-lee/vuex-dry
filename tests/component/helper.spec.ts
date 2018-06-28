@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Vue from "vue";
 import cachedStore from "../../src/component/cached_store";
 Vue.use(Vuex);
-import { get, action, sync } from "../../src/component/helper";
+import { get, action, sync, $get, $action } from "../../src/component/helper";
 
 const sampleModule = () => {
   return Module.build({
@@ -35,15 +35,15 @@ describe("Component Helper", () => {
     const store = sampleStore();
     cachedStore.set(store);
 
-    expect(get("user/name")()).toEqual("Paul");
+    expect($get("user/name")).toEqual("Paul");
   });
 
   it("action()", () => {
     const store = sampleStore();
     cachedStore.set(store);
 
-    action("user/name$assign")("Eunjae");
-    expect(get("user/name")()).toEqual("Eunjae");
+    $action("user/name$assign", "Eunjae");
+    expect($get("user/name")).toEqual("Eunjae");
   });
 
   it("sync()", () => {
@@ -52,7 +52,7 @@ describe("Component Helper", () => {
 
     const property = sync("user/name");
     property.set("Eunjae");
-    expect(get("user/name")()).toEqual("Eunjae");
+    expect($get("user/name")).toEqual("Eunjae");
 
     property.set("John");
     expect(property.get()).toEqual("John");
@@ -62,7 +62,7 @@ describe("Component Helper", () => {
     const store = sampleStore();
     cachedStore.set(store);
 
-    expect(get("user/meta", "profile.bio")()).toEqual("hello");
+    expect($get("user/meta", "profile.bio")).toEqual("hello");
   });
 
   it("sync() with nested path", () => {
@@ -72,6 +72,6 @@ describe("Component Helper", () => {
     const property = sync("user/meta", "profile.bio");
     expect(property.get()).toEqual("hello");
     property.set("world");
-    expect(get("user/meta")()).toEqual({ profile: { bio: "world" } });
+    expect($get("user/meta")).toEqual({ profile: { bio: "world" } });
   });
 });

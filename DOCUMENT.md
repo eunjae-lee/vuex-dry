@@ -460,31 +460,28 @@ computed: {
 
 It works just like that.
 
-### Use them in methods
+### Syntactic sugar
 
 Sometimes you just want to do something in your methods without mapping them.
 
 ```js
-import { get, commit, action } from "vuex-dry";
+import { $get, $commit, $action } from "vuex-dry";
 
 ...
 
 methods: {
   async doSomething() {
-    const name = get("myModule/user", "profile.bio");
+    const name = $get("myModule/user", "profile.bio");
     console.log(name);
 
-    action("myModule/user$reset");
+    $action("myModule/user$reset");
     // or
-    await action("myModule/someAsyncAction");
+    await $action("myModule/someAsyncAction");
 
-    commit("myModule/user", { ... })
+    $commit("myModule/user$assign", { ... })
   }
 }
 ```
-
-Yes. `get` and `action` are just the same ones we've used to map at `computed`. You can use them like this as well.
-And you can use `commit` to mutate things. It's just another syntactic sugar.
 
 ## Cheat sheet
 

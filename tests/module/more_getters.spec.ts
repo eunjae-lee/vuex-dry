@@ -1,4 +1,5 @@
 import { Module } from "../../src";
+import { muteLog } from "../../src/utils/logger";
 import Vuex from "vuex";
 import Vue from "vue";
 Vue.use(Vuex);
@@ -21,6 +22,8 @@ const sampleStore = () => {
 };
 
 describe("Default getters", () => {
+  beforeEach(() => muteLog());
+
   it("provide $get for object state", () => {
     const store = sampleStore();
     expect(store.getters["user/profile$get"]("bio")).toEqual("hello");

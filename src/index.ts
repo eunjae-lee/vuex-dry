@@ -1,6 +1,14 @@
 import Module from "./module";
 import plugin from "./component/plugin";
-import { get, action, sync, commit, runAction } from "./component/helper";
+import {
+  get,
+  action,
+  sync,
+  $get,
+  $commit,
+  $action,
+  runAction
+} from "./component/helper";
 
 export {
   // store side
@@ -10,6 +18,8 @@ export {
   get,
   action,
   sync,
-  commit,
+  $get,
+  $commit,
+  $action,
   runAction
 };

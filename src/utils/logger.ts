@@ -1,3 +1,9 @@
+let logMuted = false;
+
+export function muteLog() {
+  logMuted = true;
+}
+
 export class ErrorLogger {
   messages: Array<string> = [];
 
@@ -10,6 +16,9 @@ export class ErrorLogger {
   }
 
   print() {
+    if (logMuted) {
+      return;
+    }
     console.error(this.messages.join("\n"));
   }
 }

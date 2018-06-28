@@ -1,4 +1,5 @@
 import { Module } from "../../src";
+import { muteLog } from "../../src/utils/logger";
 import Vuex from "vuex";
 import Vue from "vue";
 Vue.use(Vuex);
@@ -21,6 +22,8 @@ function sampleStore() {
 }
 
 describe("Default mutations", () => {
+  beforeEach(() => muteLog());
+
   it("provide $add for array state", () => {
     const store = sampleStore();
     store.commit("user/myList$add", "abc");
@@ -183,8 +186,10 @@ describe("Default mutations", () => {
       value: "hello3",
       strict: false
     });
-    expect(store.getters["myModule/user"]).toEqual({profile: {bio: "hello", bio2: "hello2", bio3: "hello3"}})
-  })
+    expect(store.getters["myModule/user"]).toEqual({
+      profile: { bio: "hello", bio2: "hello2", bio3: "hello3" }
+    });
+  });
 
   it("provide $reset", () => {
     const store = sampleStore();
