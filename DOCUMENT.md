@@ -348,7 +348,7 @@ store.commit("myModule/posts$update", {
 });
 ```
 
-## Component side mapping
+## Component helpers
 
 `vuex-dry` provides mapping functions which are similar to built-in mappers from `vuex` like `mapGetters`, `mapMutations`, etc.
 
@@ -460,40 +460,64 @@ computed: {
 
 It works just like that.
 
+### Use them in methods
+
+Sometimes you just want to do something in your methods without mapping them.
+
+```js
+import { get, commit, action } from "vuex-dry";
+
+...
+
+methods: {
+  async doSomething() {
+    const name = get("myModule/user", "profile.bio");
+    console.log(name);
+
+    action("myModule/user$reset");
+    // or
+    await action("myModule/someAsyncAction");
+
+    commit("myModule/user", { ... })
+  }
+}
+```
+
+Yes. `get` and `action` are just the same ones we've used to map at `computed`. You can use them like this as well.
+And you can use `commit` to mutate things. It's just another syntactic sugar.
+
 ## Cheat sheet
 
 ### common
 
 Let's say you have a state named `whatever`.
 
-| type     |  example         | parameters       |
-|----------|------------------|------------------|
-| mutation | whatever$assign  | commit("whatever$assign", payload) |
-| mutation | whatever$reset   | commit("whatever$reset") |
-| mutation | $resetAll        | commit("$resetAll") |
-| action   | whatever$assign  | dispatch("whatever$assign", payload) |
-| action   | whatever$reset   | dispatch("whatever$reset") |
-| action   | $resetAll        | dispatch("$resetAll") |
-
+| type     | example         | parameters                           |
+| -------- | --------------- | ------------------------------------ |
+| mutation | whatever$assign | commit("whatever$assign", payload)   |
+| mutation | whatever$reset  | commit("whatever$reset")             |
+| mutation | $resetAll       | commit("$resetAll")                  |
+| action   | whatever$assign | dispatch("whatever$assign", payload) |
+| action   | whatever$reset  | dispatch("whatever$reset")           |
+| action   | $resetAll       | dispatch("$resetAll")                |
 
 ### array
 
 Let's say you have a state named `posts`.
 
-| type     |  example     | parameters       |
-|----------|--------------|------------------|
-| getter   | posts$find   | 1. getters\["posts$find"](fn)<br/>2. getters\["posts$find"](key, value) |
-| getter   | posts$filter | getters\["posts$filter"](fn) |
-| mutation | posts$add    | commit("posts$add", value) |
-| mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", \[key, value]) |
+| type     | example      | parameters                                                                                                                      |
+| -------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| getter   | posts$find   | 1. getters\["posts$find"](fn)<br/>2. getters\["posts$find"](key, value)                                                         |
+| getter   | posts$filter | getters\["posts$filter"](fn)                                                                                                    |
+| mutation | posts$add    | commit("posts$add", value)                                                                                                      |
+| mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", \[key, value])                                                      |
 | mutation | posts$update | 1. commit("posts$update", { value: newPost, test: testFunction })<br/>2. commit("posts$update", { value: newPost, test: "id" }) |
-
 
 ### object
 
 Let's say you have a state named `map`.
 
-| type     |  example     | parameters       |
-|----------|--------------|------------------|
-| getter   | map$get      | getters\["map$get"]("your.nested.key") |
-| mutation | map$set      | commit("map$set", { key, value } |
+| type     | example | parameters                             |
+| -------- | ------- | -------------------------------------- |
+| getter   | map$get | getters\["map$get"]("your.nested.key") |
+| mutation | map$set | commit("map$set", { key, value }       |
