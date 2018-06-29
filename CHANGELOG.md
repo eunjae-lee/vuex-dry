@@ -1,3 +1,7 @@
+## 0.1.19 (29/Jun/2018)
+
+- You can map with variables now. => [See](https://github.com/eunjae-lee/vuex-dry/blob/master/DOCUMENT.md#mapping-with-variables)
+
 ## 0.1.18 (28/Jun/2018)
 
 - You can use `get` and `action` in methods now.
