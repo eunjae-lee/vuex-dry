@@ -55,7 +55,8 @@ describe("Component Helper", () => {
     expect($get("user/name")).toEqual("Eunjae");
 
     property.set("John");
-    expect(property.get()).toEqual("John");
+    const name = property.get();
+    expect(name).toEqual("John");
   });
 
   it("get() with nested path", () => {

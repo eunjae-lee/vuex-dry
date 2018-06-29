@@ -89,6 +89,23 @@ describe("View Test", () => {
     expect(wrapper.find("p").text()).toEqual("hello");
   });
 
+  it("get() value with props", () => {
+    const comp = {
+      template: "<p>{{ bio }}</p>",
+      store: sampleStore(),
+      props: ["usermeta"],
+      computed: {
+        bio: get({ this: "usermeta" }, "profile.bio")
+      }
+    };
+    const wrapper = shallowMount(comp, {
+      propsData: {
+        usermeta: "user/meta"
+      }
+    });
+    expect(wrapper.find("p").text()).toEqual("hello");
+  });
+
   it("sync() value from store", () => {
     const store = sampleStore();
     const comp = {
@@ -114,6 +131,105 @@ describe("View Test", () => {
       }
     };
     const wrapper = shallowMount(comp);
+    expect(wrapper.find("p").text()).toEqual("");
+    store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
+    wrapper.vm.$forceUpdate();
+    expect(wrapper.find("p").text()).toEqual("abc");
+  });
+
+  it("sync() with props", () => {
+    const store = sampleStore2();
+    const comp = {
+      template: "<p>{{ username }}</p>",
+      props: ["stateName", "nestedPath"],
+      store,
+      computed: {
+        username: sync({ this: "stateName" }, { this: "nestedPath" })
+      }
+    };
+    const wrapper = shallowMount(comp, {
+      propsData: {
+        stateName: "user/meta",
+        nestedPath: "twitter.username"
+      }
+    });
+    expect(wrapper.find("p").text()).toEqual("");
+    store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
+    wrapper.vm.$forceUpdate();
+    expect(wrapper.find("p").text()).toEqual("abc");
+  });
+
+  it("sync() with data", () => {
+    const store = sampleStore2();
+    const comp = {
+      template: "<p>{{ username }}</p>",
+      store,
+      computed: {
+        username: sync({ this: "stateName" }, { this: "nestedPath" })
+      },
+      data() {
+        return {
+          stateName: "user/meta",
+          nestedPath: "twitter.username"
+        };
+      }
+    };
+    const wrapper = shallowMount(comp);
+    expect(wrapper.find("p").text()).toEqual("");
+    store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
+    wrapper.vm.$forceUpdate();
+    expect(wrapper.find("p").text()).toEqual("abc");
+  });
+
+  it("sync() with computed", () => {
+    const store = sampleStore2();
+    const comp = {
+      template: "<p>{{ username }}</p>",
+      store,
+      computed: {
+        username: sync({ this: "stateName" }, { this: "nestedPath" }),
+        stateName() {
+          return "user/meta";
+        },
+        nestedPath() {
+          return "twitter.username";
+        }
+      }
+    };
+    const wrapper = shallowMount(comp);
+    expect(wrapper.find("p").text()).toEqual("");
+    store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
+    wrapper.vm.$forceUpdate();
+    expect(wrapper.find("p").text()).toEqual("abc");
+  });
+
+  it("sync() with mixed", () => {
+    const store = sampleStore2();
+    const comp = {
+      template: "<p>{{ username }}</p>",
+      store,
+      computed: {
+        username: sync({ this: "stateName" }, { this: "nestedPath" }),
+        stateName() {
+          return this.user + "/" + this.meta;
+        },
+        nestedPath() {
+          return this.twitter + ".username";
+        }
+      },
+      props: ["user"],
+      data() {
+        return {
+          meta: "meta",
+          twitter: "twitter"
+        };
+      }
+    };
+    const wrapper = shallowMount(comp, {
+      propsData: {
+        user: "user"
+      }
+    });
     expect(wrapper.find("p").text()).toEqual("");
     store.commit("user/meta$set", { key: "twitter.username", value: "abc" });
     wrapper.vm.$forceUpdate();
@@ -149,5 +265,50 @@ describe("View Test", () => {
         .at(1)
         .text()
     ).toBe("modified_second");
+  });
+
+  it("action() resets value from store", () => {
+    const comp = {
+      template: "<p>{{ bio }}</p>",
+      store: sampleStore(),
+      computed: {
+        bio: sync("user/meta", "profile.bio")
+      },
+      methods: {
+        resetAll: action("user/meta$reset")
+      },
+      created() {
+        this.bio = "hello2";
+        this.resetAll();
+      }
+    };
+    const wrapper = shallowMount(comp);
+
+    expect(wrapper.find("p").text()).toEqual("hello");
+  });
+
+  it("action() resets value with data from store", () => {
+    const comp = {
+      template: "<p>{{ bio }}</p>",
+      store: sampleStore(),
+      computed: {
+        bio: sync("user/meta", "profile.bio")
+      },
+      data() {
+        return {
+          actionType: "user/meta$reset"
+        };
+      },
+      methods: {
+        resetAll: action({ this: "actionType" })
+      },
+      created() {
+        this.bio = "hello2";
+        this.resetAll();
+      }
+    };
+    const wrapper = shallowMount(comp);
+
+    expect(wrapper.find("p").text()).toEqual("hello");
   });
 });

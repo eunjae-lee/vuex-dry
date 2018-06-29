@@ -460,6 +460,44 @@ computed: {
 
 It works just like that.
 
+### Mapping with variables
+
+```js
+computed: {
+  company: get("myModule/company"),
+  name: get("myModule/user$get", "name"),
+  bio: sync("myModule/user$get", "profile.bio")
+},
+methods: {
+  reset: action("myModule/$resetAll")
+}
+```
+
+When you use `get`, `sync` or `action`, you might want to pass instance variable of your VueComponent as parameters instead of static strings. You can do that like the following:
+
+```js
+props: ["companyType"],
+data() {
+  return {
+    userType: "myModule/user$get",
+    bioPath: "profile.bio",
+    resetActionType: "myModule/$resetAll"
+  }
+},
+computed: {
+  company: get({ this: "companyType" }),
+  name: get({ this: "userType" }, "name"),
+  bio: sync({ this: "userType" }, { this: "bioPath" })
+},
+methods: {
+  reset: action({ this: "resetActionType" })
+}
+```
+
+`get` and `sync` takes one or two parameters and any of them could be either a string or an object with a key named `this`. `action` takes one parameter and it's the same.
+
+If you put `{ this: "userType" }`, then when it's evaluated, it will invoke `this["userType"]` and use it to map things. Nothing magical.
+
 ### Syntactic sugar
 
 Sometimes you just want to do something in your methods without mapping them.
