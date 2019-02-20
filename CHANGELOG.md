@@ -1,3 +1,7 @@
+## 0.2.0 (20/Feb/2019)
+
+- New mutation `xxx$unshift` added for array state by [@Yuhannaa](https://github.com/Yuhannaa)
+
 ## 0.1.19 (29/Jun/2018)
 
 - You can map with variables now. => [See](https://github.com/eunjae-lee/vuex-dry/blob/master/DOCUMENT.md#mapping-with-variables)
