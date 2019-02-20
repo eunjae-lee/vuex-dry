@@ -29,6 +29,12 @@ describe("Default mutations", () => {
     store.commit("user/myList$add", "abc");
     expect(store.getters["user/myList"]).toEqual(["abc"]);
   });
+  it("provide $unshift for array state", () => {
+    const store = sampleStore();
+    store.commit("user/myList$add", "def");
+    store.commit("user/myList$unshift", "abc");
+    expect(store.getters["user/myList"]).toEqual(["abc", "def"]);
+  });
   it("provide $delete for array state", () => {
     const store = sampleStore();
     store.commit("user/myList$add", { id: 1, name: "Paul" });
