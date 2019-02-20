@@ -348,6 +348,14 @@ store.commit("myModule/posts$update", {
 });
 ```
 
+#### posts#unshift
+
+It adds an item to the beginning of an array.
+
+```js
+store.commit("myModule/posts$unshift", post);
+```
+
 ## Component helpers
 
 `vuex-dry` provides mapping functions which are similar to built-in mappers from `vuex` like `mapGetters`, `mapMutations`, etc.
@@ -547,6 +555,7 @@ Let's say you have a state named `posts`.
 | mutation | posts$add    | commit("posts$add", value)                                                                                                      |
 | mutation | posts$delete | 1. commit("posts$delete", fn)<br/>2. commit("posts$delete", \[key, value])                                                      |
 | mutation | posts$update | 1. commit("posts$update", { value: newPost, test: testFunction })<br/>2. commit("posts$update", { value: newPost, test: "id" }) |
+| mutation | posts$unshift | commit("posts$unshift", value) |
 
 ### object
 
