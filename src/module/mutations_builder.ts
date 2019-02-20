@@ -30,6 +30,12 @@ const makeAdd = (stateName: string) => {
   };
 };
 
+const makeUnshift = (stateName: string) => {
+  return (state: any, value: any) => {
+    state[stateName].unshift(value);
+  };
+};
+
 const makeDelete = (stateName: string) => {
   return (state: any, test: Function | Array<any>) => {
     let index = -1;
@@ -131,6 +137,7 @@ function build(buildConfig: BuildConfig): MutationTree<any> {
     (acc: any, stateName: string) => {
       if (Array.isArray(initialState[stateName])) {
         acc[`${stateName}$add`] = makeAdd(stateName);
+        acc[`${stateName}$unshift`] = makeUnshift(stateName);
         acc[`${stateName}$delete`] = makeDelete(stateName);
         acc[`${stateName}$update`] = makeUpdate(stateName);
       } else if (initialState[stateName] instanceof Object) {
