@@ -7,6 +7,15 @@
 [![GitHub forks](https://img.shields.io/github/forks/eunjae-lee/vuex-dry.svg)](https://github.com/eunjae-lee/vuex-dry/network)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/eunjae-lee/vuex-dry.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Feunjae-lee%2Fvuex-dry)
 
+## WARNING
+
+This repository is not actively maintained.
+I haven't used this package for a year.
+It means there has been no change.
+
+You can still use this as long as it works in your environment.
+I do not guarantee it works with Vue 3.
+
 ## Introduction
 
 `vuex-dry` helps keep your vuex code DRY.
