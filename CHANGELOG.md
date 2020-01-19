@@ -1,3 +1,7 @@
+## 0.2.1 (19/Jan/2020)
+
+- Added `Module.build({ ..., stateAsFunction: true })`, for [Nuxt.js](https://nuxtjs.org/guide/vuex-store#activate-the-store).
+
 ## 0.2.0 (20/Feb/2019)
 
 - New mutation `xxx$unshift` added for array state by [@Yuhannaa](https://github.com/Yuhannaa)
