@@ -7,9 +7,11 @@ import { Module as VuexModuleType } from "vuex";
 
 const Module = {
   build(buildConfig: BuildConfig): VuexModuleType<any, any> {
+    const { stateAsFunction } = buildConfig;
+    const state = buildState(buildConfig);
     return {
       namespaced: true,
-      state: buildState(buildConfig),
+      state: stateAsFunction ? () => state : state,
       getters: {
         ...buildGetters(buildConfig),
         ...buildConfig.getters

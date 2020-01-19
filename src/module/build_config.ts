@@ -17,6 +17,7 @@ interface BuildConfig {
   actions?: ActionTree<any, any>;
   mutations?: MutationTree<any>;
   modules?: ModuleTree<any>;
+  stateAsFunction?: boolean;
 }
 
 export default BuildConfig;
